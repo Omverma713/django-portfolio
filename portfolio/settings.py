@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
+from decouple import config
 import os
 from pathlib import Path
 
@@ -20,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&nf=(11ic#^*yg%zzri9xea@=mybr14ntcs#f_$y_hfnn&r7sx'
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -134,11 +135,11 @@ EMAIL_PORT = 587
 
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = "omv7130@gmail.com"
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 
-EMAIL_HOST_PASSWORD = "xjumtrgzkmbpzjqy"
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-TURNSTILE_SITE_KEY = "0x4AAAAAADvfq9CRw2rJBu1q"
-TURNSTILE_SECRET_KEY = "0x4AAAAAADvfq1volmICDldvlI8e7sFDess"
+TURNSTILE_SITE_KEY = config("TURNSTILE_SITE_KEY")
+TURNSTILE_SECRET_KEY = config("TURNSTILE_SECRET_KEY")
