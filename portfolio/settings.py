@@ -27,7 +27,7 @@ SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", cast=bool)
 
 ALLOWED_HOSTS = ["django-portfolio-xxxx.onrender.com"]
-CSRF_TRUSTED_ORIGINS = ["https://django-portfolio-xxxx.onrender.com"]
+CSRF_TRUSTED_ORIGINS = ["https://django-portfolio-i2t8.onrender.com"]
 
 
 # Application definition
