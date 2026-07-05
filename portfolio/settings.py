@@ -130,7 +130,7 @@ STATICFILES_DIRS = [
 ]
 # ---------------- EMAIL CONFIG ---------------- #
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 EMAIL_HOST = "smtp.gmail.com"
 
@@ -151,3 +151,4 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = (
     "whitenoise.storage.CompressedManifestStaticFilesStorage"
 )
+EMAIL_TIMEOUT = 15

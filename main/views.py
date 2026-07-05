@@ -315,7 +315,11 @@ Built with ❤️ by <strong>Om Verma</strong>
             "text/html"
         )
 
-        email_message.send()
+        try:
+            email_message.send()
+        except Exception as e:
+           print(e)
+           raise
 
         # ====================================
         # Premium Auto Reply
@@ -591,7 +595,11 @@ Built with Django • React • Tailwind CSS
         )
 
         reply_email.attach_alternative(reply_html, "text/html")
-        reply_email.send()
+        try:
+            reply_email.send()
+        except Exception as e:
+           print(e)
+           raise
 
         messages.success(
             request,
