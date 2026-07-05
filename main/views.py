@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.core.mail import EmailMultiAlternatives
+import resend
 from django.conf import settings
 import requests
 
@@ -8,7 +8,7 @@ import requests
 def home(request):
 
     if request.method == "POST":
-
+        resend.api_key = settings.RESEND_API_KEY
         # ===========================
         # Cloudflare Turnstile Check
         # ===========================
@@ -303,23 +303,16 @@ Built with ❤️ by <strong>Om Verma</strong>
         # Send Email To You
         # ====================================
 
-        email_message = EmailMultiAlternatives(
-            subject=subject_line,
-            body="",
-            from_email=settings.EMAIL_HOST_USER,
-            to=[settings.EMAIL_HOST_USER],
-        )
-
-        email_message.attach_alternative(
-            html_message,
-            "text/html"
-        )
-
         try:
-            email_message.send()
+            resend.Emails.send({
+                "from": "Portfolio <onboarding@resend.dev>",
+                "to": settings.EMAIL_HOST_USER,
+                "subject": subject_line,
+                "html": html_message,
+            })
         except Exception as e:
-           print(e)
-           raise
+            print(e)
+            raise
 
         # ====================================
         # Premium Auto Reply
@@ -587,19 +580,16 @@ Built with Django • React • Tailwind CSS
 </html>
 """
 
-        reply_email = EmailMultiAlternatives(
-            subject=reply_subject,
-            body="",
-            from_email=settings.EMAIL_HOST_USER,
-            to=[email],
-        )
-
-        reply_email.attach_alternative(reply_html, "text/html")
         try:
-            reply_email.send()
+            resend.Emails.send({
+                "from": "Om Verma <onboarding@resend.dev>",
+                "to":settings.EMAIL_HOST_USER,
+                "subject": reply_subject,
+                "html": reply_html,
+            })
         except Exception as e:
-           print(e)
-           raise
+            print(e)
+            raise
 
         messages.success(
             request,

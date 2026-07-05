@@ -152,3 +152,4 @@ STATICFILES_STORAGE = (
     "whitenoise.storage.CompressedManifestStaticFilesStorage"
 )
 EMAIL_TIMEOUT = 15
+RESEND_API_KEY = config("RESEND_API_KEY")
