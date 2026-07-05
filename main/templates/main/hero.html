@@ -1,281 +1,161 @@
 {% load static %}
-<section class="relative min-h-screen  bg-[#070B14]">
+<section class="relative min-h-screen bg-[#070B14] overflow-x-hidden text-white">
+  <!-- Aurora Background -->
 
-    <!-- Aurora Background -->
+  <div
+    class="absolute -top-20 -left-24 sm:-top-40 sm:-left-52 lg:-left-32 w-[260px] h-[260px] sm:w-[520px] sm:h-[520px] lg:w-[650px] lg:h-[650px] rounded-full bg-violet-600/20 blur-[80px] sm:blur-[140px] lg:blur-[170px]">
+  </div>
 
-    <div class="absolute -top-40 -left-32 w-[650px] h-[650px] rounded-full bg-violet-600/20 blur-[170px]"></div>
+  <div
+    class="absolute -bottom-20 -right-24 sm:-bottom-40 sm:-right-52 lg:-right-32 w-[260px] h-[260px] sm:w-[560px] sm:h-[560px] lg:w-[700px] lg:h-[700px] rounded-full bg-cyan-500/20 blur-[80px] sm:blur-[145px] lg:blur-[180px]">
+  </div>
 
-    <div class="absolute -bottom-40 -right-32 w-[700px] h-[700px] rounded-full bg-cyan-500/20 blur-[180px]"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.05),transparent_60%)]"></div>
 
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,.05),transparent_60%)]"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-40 sm:pt-44 lg:pt-48 xl:pt-52 overflow-x-hidden">
+    <div class="grid lg:grid-cols-2 gap-10 sm:gap-14 lg:gap-14 xl:gap-20 items-center">
+      <!-- LEFT -->
 
-    <div class="relative z-10 max-w-7xl mx-auto px-8 pt-40">
+      <div class="hero-text text-center lg:text-left">
+        <!-- Badge -->
 
-        <div class="grid lg:grid-cols-2 gap-20 items-center">
-
-            <!-- LEFT -->
-
-            <div class="hero-text">
-
-                <!-- Badge -->
-
-                <div class="hero-badge inline-flex items-center gap-3 px-5 py-2 rounded-full border border-violet-500/30 bg-white/5 backdrop-blur-xl mb-8">
-
-                    <span class="w-3 h-3 rounded-full bg-green-400 animate-pulse"></span>
-
-                    <span class="text-sm text-gray-300">
-
-                        Available for Internship
-
-                    </span>
-
-                </div>
-
-                <!-- Subtitle -->
-<p class="hero-subtitle uppercase tracking-[10px] text-violet-400 mb-8">
-
-   
-
-
-               
-
-                    FULL STACK DEVELOPER
-
-                </p>
-
-                <!-- Heading -->
-
-                <h1 class="text-6xl lg:text-[105px] font-black leading-[0.92]">
-
-                    BUILD.
-
-                    <br>
-
-                    CREATE.
-
-                    <br>
-
-                    <span class="text-violet-500">
-
-                        INSPIRE.
-
-                    </span>
-
-                </h1>
-
-                <!-- Description -->
-
-                <p class="hero-description mt-10 max-w-xl text-lg leading-9 text-gray-white"">
-
-                    Passionate Computer Science student focused on building premium web applications using Django, React, Tailwind CSS and modern backend technologies.
-
-                </p>
-
-                <!-- Buttons -->
-
-                <div class="flex flex-wrap gap-5 mt-12">
-
-                    <a href="#projects"
-
-                    class="px-9 py-4 rounded-full bg-violet-600 hover:bg-violet-500 duration-300 shadow-[0_0_35px_rgba(139,92,246,.45)]">
-
-                        View Projects
-
-                    </a>
-
-                    <a href="#contact"
-
-                    class="px-9 py-4 rounded-full border border-violet-500 hover:bg-violet-500/10 duration-300">
-
-                        Contact Me
-
-                    </a>
-
-                </div>
-
-            </div>
-                        <!-- RIGHT -->
-
-            <div class="hero-image relative flex justify-center items-center">
-
-                <!-- Glow -->
-
-                <div
-                class="absolute w-[520px] h-[520px] rounded-full bg-violet-600/25 blur-[120px] animate-pulse">
-                </div>
-
-                <!-- Outer Ring -->
-
-                <div
-                class="absolute w-[470px] h-[470px] rounded-full border border-violet-500/30">
-                </div>
-
-                <!-- Middle Ring -->
-
-                <div
-                class="absolute w-[420px] h-[420px] rounded-full border border-cyan-400/20">
-                </div>
-
-                <!-- Profile -->
-
-                <div class="relative z-20">
-
-                    <img
-
-                    src="{% static 'images/profile.png' %}"
-
-                    alt="Profile"
-
-                    class="w-[360px] h-[360px] object-cover rounded-full border-[8px] border-white/10 shadow-[0_0_80px_rgba(139,92,246,.45)]">
-
-                </div>
-
-                <!-- Top Right Card -->
-
-                <div
-                class="absolute top-10 right-0 z-30 rounded-3xl bg-white/5 backdrop-blur-2xl border border-white/10 px-6 py-5">
-
-                    <h3 class="text-4xl font-black text-violet-400">
-
-                        2+
-
-                    </h3>
-
-                    <p class="text-gray-400 mt-2">
-
-                        Years Learning
-
-                    </p>
-
-                </div>
-
-                <!-- Bottom Right Badge -->
-
-                <div
-                class="absolute bottom-8 right-5 z-30 rounded-full bg-white/5 backdrop-blur-2xl border border-white/10 px-6 py-3">
-
-                    Python • Django • React
-
-                </div>
-
-            </div>
-
-        </div>
-        <!-- Bottom Glass Stats -->
-
-<div class="mt-24">
-
-    <div
-    class="relative
-    max-w-6xl
-    mx-auto
-    rounded-[35px]
-    border
-    border-white/10
-    bg-white/5
-    backdrop-blur-2xl
-    px-10
-    py-8
-    shadow-[0_0_50px_rgba(124,58,237,.18)]">
-
-        <div class="grid md:grid-cols-3 gap-10">
-
-            <!-- Card -->
-
-            <div class="text-center">
-
-                <i class="fas fa-server text-5xl text-violet-400 mb-5"></i>
-
-                <h3 class="text-3xl font-bold">
-
-                    Backend
-
-                </h3>
-
-                <p class="text-gray-400 mt-3">
-
-                    Focused
-
-                </p>
-
-            </div>
-
-            <!-- Card -->
-
-            <div class="text-center border-x border-white/10">
-
-                <i class="fas fa-bullseye text-5xl text-cyan-400 mb-5"></i>
-
-                <h3 class="text-5xl font-black text-cyan-400">
-
-                    500+
-
-                </h3>
-
-                <p class="text-gray-400 mt-3">
-
-                    DSA Goal
-
-                </p>
-
-            </div>
-
-            <!-- Card -->
-
-            <div class="text-center">
-
-                <i class="fas fa-code text-5xl text-pink-400 mb-5"></i>
-
-                <h3 class="text-5xl font-black text-pink-400">
-
-                    10+
-
-                </h3>
-
-                <p class="text-gray-400 mt-3">
-
-                    Technologies
-
-                </p>
-
-            </div>
-
+        <div
+          class="hero-badge inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-5 py-2 rounded-full border border-violet-500/30 bg-white/5 backdrop-blur-xl mb-5 sm:mb-8">
+          <span class="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-green-400 flex-shrink-0 blink-dot"></span>
+          <span class="text-xs sm:text-sm text-gray-300 whitespace-nowrap">Available for Internship</span>
         </div>
 
+        <!-- Subtitle -->
+        <p
+          class="hero-subtitle uppercase tracking-[3px] sm:tracking-[6px] lg:tracking-[10px] text-[10px] sm:text-xs lg:text-sm text-violet-400 mb-5 sm:mb-7">
+          FULL STACK DEVELOPER
+        </p>
+
+        <!-- Heading -->
+
+        <h1
+          class="text-4xl sm:text-5xl md:text-7xl lg:text-7xl xl:text-[100px] font-black leading-[0.95] lg:leading-[0.92]">
+          BUILD.
+
+          <br />
+
+          CREATE.
+
+          <br />
+
+          <span class="text-violet-500">INSPIRE.</span>
+        </h1>
+
+        <!-- Description -->
+
+        <p
+          class="hero-description mt-6 sm:mt-8 max-w-sm sm:max-w-xl mx-auto lg:mx-0 text-sm sm:text-base lg:text-lg leading-6 sm:leading-8 text-gray-300">
+          Passionate Computer Science student focused on building premium web
+          applications using Django, React, Tailwind CSS and modern backend
+          technologies.
+        </p>
+
+        <!-- Buttons -->
+
+        <div
+          class="flex flex-col xs:flex-row sm:flex-row flex-wrap justify-center lg:justify-start gap-3 sm:gap-5 mt-8 sm:mt-12">
+          <a href="#projects"
+            class="w-full sm:w-auto px-8 sm:px-9 py-3.5 sm:py-4 rounded-full bg-violet-600 hover:bg-violet-500 duration-300 shadow-[0_0_35px_rgba(139,92,246,.45)] text-center text-sm sm:text-base font-semibold">
+            View Projects
+          </a>
+
+          <a href="#contact"
+            class="w-full sm:w-auto px-8 sm:px-9 py-3.5 sm:py-4 rounded-full border border-violet-500 hover:bg-violet-500/10 duration-300 text-center text-sm sm:text-base font-semibold">
+            Contact Me
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+
+      <div
+        class="hero-image relative flex justify-center items-center min-h-[260px] sm:min-h-[420px] lg:min-h-[500px] mt-4 sm:mt-0 lg:mt-0">
+        <!-- Glow -->
+
+        <div
+          class="absolute w-[180px] h-[180px] sm:w-[380px] sm:h-[380px] lg:w-[500px] lg:h-[500px] xl:w-[520px] xl:h-[520px] rounded-full bg-violet-600/25 blur-[60px] sm:blur-[90px] lg:blur-[120px] animate-pulse">
+        </div>
+
+        <!-- Outer Ring -->
+
+        <div
+          class="absolute w-[230px] h-[230px] sm:w-[400px] sm:h-[400px] lg:w-[450px] lg:h-[450px] xl:w-[470px] xl:h-[470px] rounded-full border border-violet-500/30">
+        </div>
+
+        <!-- Middle Ring -->
+
+        <div
+          class="absolute w-[195px] h-[195px] sm:w-[350px] sm:h-[350px] lg:w-[400px] lg:h-[400px] xl:w-[420px] xl:h-[420px] rounded-full border border-cyan-400/20">
+        </div>
+
+        <!-- Profile & Floating Badges -->
+
+        <div class="relative z-20 w-[160px] h-[160px] sm:w-[270px] sm:h-[270px] lg:w-[340px] lg:h-[340px] xl:w-[360px] xl:h-[360px]">
+          <img src="{% static 'images/profile.png' %}" alt="Profile"
+            class="w-full h-full object-cover rounded-full border-[5px] sm:border-[7px] lg:border-[8px] border-white/10 shadow-[0_0_60px_rgba(139,92,246,.45)]" />
+
+          <!-- Top Right Card — right of circle, mid-height -->
+
+          <div
+            class="absolute top-[25%] right-0 translate-x-[40%] sm:translate-x-[35%] lg:translate-x-[30%] z-30 rounded-xl sm:rounded-2xl lg:rounded-3xl bg-white/5 backdrop-blur-2xl border border-white/10 px-3 sm:px-5 lg:px-6 py-2 sm:py-4 lg:py-5 shadow-lg">
+            <h3 class="text-lg sm:text-2xl lg:text-4xl font-black text-violet-400">2+</h3>
+            <p class="text-[9px] sm:text-xs lg:text-base text-gray-400 mt-0.5 lg:mt-2">Years Learning</p>
+          </div>
+
+          <!-- Bottom Badge — bottom-center of circle -->
+
+          <div
+            class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-30 rounded-full bg-white/5 backdrop-blur-2xl border border-white/10 px-3 sm:px-5 lg:px-6 py-1.5 sm:py-2 lg:py-3 text-[9px] sm:text-xs lg:text-base whitespace-nowrap text-gray-300 shadow-lg">
+            Python &bull; Django &bull; React
+          </div>
+        </div>
+      </div>
     </div>
 
-</div>
+    <!-- Bottom Glass Stats -->
 
-<!-- Scroll Indicator -->
+    <div class="mt-12 sm:mt-20 lg:mt-24">
+      <div
+        class="relative max-w-6xl mx-auto rounded-2xl sm:rounded-[35px] border border-white/10 bg-white/5 backdrop-blur-2xl px-5 sm:px-10 py-7 sm:py-8 shadow-[0_0_50px_rgba(124,58,237,.18)]">
+        <div class="grid grid-cols-3 gap-3 sm:gap-8 lg:gap-10">
+          <!-- Card 1 -->
 
-<div
-class="flex
-flex-col
-items-center
-mt-20
-pb-12">
+          <div class="text-center px-1">
+            <i class="fas fa-server text-2xl sm:text-4xl lg:text-5xl text-violet-400 mb-2 sm:mb-4 lg:mb-5"></i>
+            <h3 class="text-lg sm:text-2xl lg:text-3xl font-bold">Backend</h3>
+            <p class="text-gray-400 text-xs sm:text-sm lg:text-base mt-1 sm:mt-2 sm:mt-3">Focused</p>
+          </div>
 
-    <p
-    class="uppercase
-    tracking-[6px]
-    text-xs
-    text-gray-500
-    mb-4">
+          <!-- Card 2 -->
 
-        Scroll
+          <div class="text-center px-1 border-x border-white/10">
+            <i class="fas fa-bullseye text-2xl sm:text-4xl lg:text-5xl text-cyan-400 mb-2 sm:mb-4 lg:mb-5"></i>
+            <h3 class="text-2xl sm:text-4xl lg:text-5xl font-black text-cyan-400">500+</h3>
+            <p class="text-gray-400 text-xs sm:text-sm lg:text-base mt-1 sm:mt-2 sm:mt-3">DSA Goal</p>
+          </div>
 
-    </p>
+          <!-- Card 3 -->
 
-    <div
-    class="w-[2px]
-    h-16
-    bg-gradient-to-b
-    from-violet-500
-    to-transparent">
+          <div class="text-center px-1">
+            <i class="fas fa-code text-2xl sm:text-4xl lg:text-5xl text-pink-400 mb-2 sm:mb-4 lg:mb-5"></i>
+            <h3 class="text-2xl sm:text-4xl lg:text-5xl font-black text-pink-400">10+</h3>
+            <p class="text-gray-400 text-xs sm:text-sm lg:text-base mt-1 sm:mt-2 sm:mt-3">Technologies</p>
+          </div>
+        </div>
+      </div>
     </div>
 
-</div>
+    <!-- Scroll Indicator -->
 
-</div>
+    <div class="flex flex-col items-center mt-12 sm:mt-20 pb-8 sm:pb-12">
+      <p class="uppercase tracking-[6px] text-[10px] sm:text-xs text-gray-500 mb-3 sm:mb-4">Scroll</p>
 
+      <div class="w-[2px] h-10 sm:h-16 bg-gradient-to-b from-violet-500 to-transparent"></div>
+    </div>
+  </div>
 </section>
