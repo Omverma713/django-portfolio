@@ -7,8 +7,17 @@ if(menuBtn && mobileMenu){
 
     menuBtn.addEventListener("click",()=>{
 
-        mobileMenu.classList.toggle("hidden");
+        const isHidden = mobileMenu.classList.toggle("hidden");
+        menuBtn.textContent = isHidden ? "☰" : "✕";
 
+    });
+
+    const menuLinks = mobileMenu.querySelectorAll("a");
+    menuLinks.forEach(link => {
+        link.addEventListener("click", () => {
+            mobileMenu.classList.add("hidden");
+            menuBtn.textContent = "☰";
+        });
     });
 
 }

@@ -1,4 +1,4 @@
-<section id="contact" class="relative py-40 overflow-hidden">
+<section id="contact" class="relative py-20 lg:py-40 overflow-hidden">
 
     <!-- Background Glow -->
 
@@ -6,11 +6,11 @@
 
     <div class="absolute -right-32 bottom-0 w-[450px] h-[450px] bg-cyan-500/20 blur-[180px] rounded-full"></div>
 
-    <div class="max-w-7xl mx-auto px-8 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
 
         <!-- Heading -->
 
-        <div class="text-center mb-24">
+        <div class="text-center mb-12 lg:mb-24">
 
             <p class="uppercase tracking-[8px] text-violet-400 mb-5">
 
@@ -18,7 +18,7 @@
 
             </p>
 
-            <h2 class="text-6xl font-black">
+            <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black">
 
                 Let's Build Something Amazing
 
@@ -34,7 +34,7 @@
 
         </div>
 
-        <div class="grid lg:grid-cols-2 gap-16">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16">
 
             <!-- LEFT -->
 
@@ -46,10 +46,11 @@
                 backdrop-blur-2xl
                 border
                 border-white/10
-                p-10">
+                p-6
+                sm:p-10">
 
                     <h2
-                    class="text-4xl font-black mb-10">
+                    class="text-2xl sm:text-3xl lg:text-4xl font-black mb-6 sm:mb-10">
 
                         Contact Information
 
@@ -58,24 +59,24 @@
                     <!-- EMAIL -->
 
                     <div
-                    class="flex items-center gap-6 mb-10">
+                    class="flex items-center gap-4 sm:gap-6 mb-6 sm:mb-10">
 
                         <div
-                        class="w-16 h-16 rounded-2xl bg-violet-600 flex items-center justify-center text-2xl">
+                        class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-violet-600 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
 
                             <i class="fas fa-envelope"></i>
 
                         </div>
 
-                        <div>
+                        <div class="min-w-0">
 
-                            <h3 class="font-bold text-xl">
+                            <h3 class="font-bold text-lg sm:text-xl">
 
                                 Email
 
                             </h3>
 
-                            <p class="text-gray-400">
+                            <p class="text-gray-400 text-sm sm:text-base break-all">
 
                                 yourmail@gmail.com
 
@@ -88,24 +89,24 @@
                     <!-- PHONE -->
 
                     <div
-                    class="flex items-center gap-6 mb-10">
+                    class="flex items-center gap-4 sm:gap-6 mb-6 sm:mb-10">
 
                         <div
-                        class="w-16 h-16 rounded-2xl bg-cyan-500 flex items-center justify-center text-2xl">
+                        class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-cyan-500 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
 
                             <i class="fas fa-phone"></i>
 
                         </div>
 
-                        <div>
+                        <div class="min-w-0">
 
-                            <h3 class="font-bold text-xl">
+                            <h3 class="font-bold text-lg sm:text-xl">
 
                                 Phone
 
                             </h3>
 
-                            <p class="text-gray-400">
+                            <p class="text-gray-400 text-sm sm:text-base break-words">
 
                                 +91 XXXXX XXXXX
 
@@ -118,24 +119,24 @@
                     <!-- LOCATION -->
 
                     <div
-                    class="flex items-center gap-6 mb-10">
+                    class="flex items-center gap-4 sm:gap-6 mb-6 sm:mb-10">
 
                         <div
-                        class="w-16 h-16 rounded-2xl bg-pink-500 flex items-center justify-center text-2xl">
+                        class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-pink-500 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
 
                             <i class="fas fa-location-dot"></i>
 
                         </div>
 
-                        <div>
+                        <div class="min-w-0">
 
-                            <h3 class="font-bold text-xl">
+                            <h3 class="font-bold text-lg sm:text-xl">
 
                                 Location
 
                             </h3>
 
-                            <p class="text-gray-400">
+                            <p class="text-gray-400 text-sm sm:text-base break-words">
 
                                 Chhattisgarh, India
 
@@ -147,7 +148,7 @@
 
                     <!-- SOCIALS -->
 
-                   <div class="flex gap-5 mt-12">
+                    <div class="flex gap-4 sm:gap-5 mt-8 sm:mt-12">
 
     <a href="#"
     class="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center hover:bg-violet-600 duration-300">
@@ -182,10 +183,11 @@
             backdrop-blur-2xl
             border
             border-white/10
-            p-10">
+            p-6
+            sm:p-10">
 
                 <h2
-                class="text-4xl font-black mb-10">
+                class="text-2xl sm:text-3xl lg:text-4xl font-black mb-6 sm:mb-10">
 
                     Send Message
 
@@ -202,10 +204,9 @@
                     {% csrf_token %}
     <div>
 
-        
-
-        </label class="block mb-3 text-gray-300">
-        FUll Name
+        <label class="block mb-3 text-gray-300">
+            FUll Name
+        </label>
 
         <input 
 
@@ -214,7 +215,7 @@
 
         placeholder="Enter your name"
 
-        class="w-full rounded-2xl bg-[#111827] border border-white/10 px-6 py-5 outline-none focus:border-violet-500 duration-300">
+        class="w-full rounded-2xl bg-[#111827] border border-white/10 px-4 py-3.5 sm:px-6 sm:py-5 outline-none focus:border-violet-500 duration-300">
 
     </div>
 
@@ -233,7 +234,7 @@
 
       
         placeholder="Enter your email"
-  class="w-full rounded-2xl bg-[#111827] border border-white/10 px-6 py-5 outline-none focus:border-violet-500 duration-300">
+  class="w-full rounded-2xl bg-[#111827] border border-white/10 px-4 py-3.5 sm:px-6 sm:py-5 outline-none focus:border-violet-500 duration-300">
 
     </div>
 
@@ -251,7 +252,7 @@
         name="subject"
         placeholder="Project Discussion"
 
-        class="w-full rounded-2xl bg-[#111827] border border-white/10 px-6 py-5 outline-none focus:border-violet-500 duration-300">
+        class="w-full rounded-2xl bg-[#111827] border border-white/10 px-4 py-3.5 sm:px-6 sm:py-5 outline-none focus:border-violet-500 duration-300">
 
     </div>
 
@@ -269,11 +270,11 @@
 
         placeholder="Tell me about your project..."
 
-        class="w-full rounded-2xl bg-[#111827] border border-white/10 px-6 py-5 outline-none resize-none focus:border-violet-500 duration-300"></textarea>
+        class="w-full rounded-2xl bg-[#111827] border border-white/10 px-4 py-3.5 sm:px-6 sm:py-5 outline-none resize-none focus:border-violet-500 duration-300"></textarea>
 
     </div>
 
-    <div class="flex gap-5 flex-wrap">
+    <div class="flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-5">
         <div
     class="cf-turnstile"
     data-sitekey="{{ TURNSTILE_SITE_KEY }}">
@@ -281,7 +282,7 @@
 
         <button
           type="submit"
-        class="px-10 py-5 rounded-2xl bg-violet-600 hover:bg-violet-500 transition-all duration-300 shadow-[0_0_35px_rgba(139,92,246,.4)]">
+        class="w-full sm:w-auto px-6 py-4 sm:px-10 sm:py-5 rounded-2xl bg-violet-600 hover:bg-violet-500 transition-all duration-300 shadow-[0_0_35px_rgba(139,92,246,.4)] text-center font-semibold">
 
             Send Message
 
@@ -291,7 +292,7 @@
 
         href="#"
 
-        class="px-10 py-5 rounded-2xl border border-violet-500 hover:bg-violet-600/20 transition-all duration-300">
+        class="w-full sm:w-auto px-6 py-4 sm:px-10 sm:py-5 rounded-2xl border border-violet-500 hover:bg-violet-600/20 transition-all duration-300 text-center font-semibold">
 
             Download Resume
 
@@ -313,7 +314,7 @@
 
 <footer class="border-t border-white/10 py-12">
 
-    <div class="max-w-7xl mx-auto px-8 flex flex-col lg:flex-row items-center justify-between gap-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-6">
 
         <div>
 

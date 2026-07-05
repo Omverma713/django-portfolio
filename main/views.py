@@ -583,7 +583,7 @@ Built with Django • React • Tailwind CSS
         try:
             resend.Emails.send({
                 "from": "Om Verma <onboarding@resend.dev>",
-                "to":settings.EMAIL_HOST_USER,
+                "to":email,
                 "subject": reply_subject,
                 "html": reply_html,
             })
