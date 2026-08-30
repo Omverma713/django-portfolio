@@ -67,7 +67,7 @@ def home(request):
                 request,
                 "Please complete the security verification."
             )
-            return redirect("/#contact")
+            return redirect("/#contact-form")
 
         verify = requests.post(
             "https://challenges.cloudflare.com/turnstile/v0/siteverify",
@@ -85,7 +85,7 @@ def home(request):
                 request,
                 "Verification failed. Please try again."
             )
-            return redirect("/#contact")
+            return redirect("/#contact-form")
 
         # ===========================
         # Contact Form Data
@@ -421,7 +421,7 @@ def home(request):
             "✅ Your message has been sent successfully. I'll get back to you soon!"
         )
 
-        return redirect("/#contact")
+        return redirect("/#contact-form")
 
     return render(
         request,
