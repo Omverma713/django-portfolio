@@ -100,512 +100,256 @@ def home(request):
         # ====================================
         # PREMIUM EMAIL (To You)
         # Part 2 continues from here...
-        # ====================================
-
-        html_message = f""" <html>
-
-<head>
-
-<meta charset="UTF-8">
-
-</head>
-
-<body style="margin:0;padding:0;background:#eef2ff;font-family:Arial,Helvetica,sans-serif;">
-
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#eef2ff;padding:40px 0;">
-
-<tr>
-
-<td align="center">
-
-<table width="680" cellpadding="0" cellspacing="0"
-style="background:#ffffff;border-radius:22px;overflow:hidden;
-box-shadow:0 15px 40px rgba(0,0,0,.12);">
-
-<!-- Header -->
-
-<tr>
-
-<td
-style="background:linear-gradient(135deg,#6d28d9,#7c3aed,#8b5cf6);
-padding:45px;
-text-align:center;">
-
-<h1 style="margin:0;color:white;font-size:34px;">
-
-🚀 Portfolio Contact
-
-</h1>
-
-<p style="margin-top:14px;color:#ede9fe;font-size:17px;">
-
-Someone has contacted you through your portfolio.
-
-</p>
-
-</td>
-
-</tr>
-
-<!-- Body -->
-
-<tr>
-
-<td style="padding:45px;">
-
-<h2 style="margin-top:0;color:#7c3aed;">
-
-New Contact Form Submission
-
-</h2>
-
-<p style="font-size:16px;color:#555;line-height:28px;">
-
-A visitor has submitted your portfolio contact form.
-
-</p>
-
-<table
-width="100%"
-cellpadding="16"
-style="margin-top:30px;border-collapse:collapse;background:#fafafa;
-border-radius:16px;">
-
-<tr>
-
-<td width="170"
-style="font-weight:bold;color:#7c3aed;">
-
-👤 Name
-
-</td>
-
-<td>
-
-{name}
-
-</td>
-
-</tr>
-
-<tr>
-
-<td
-style="font-weight:bold;color:#7c3aed;">
-
-📧 Email
-
-</td>
-
-<td>
-
-{email}
-
-</td>
-
-</tr>
-
-<tr>
-
-<td
-style="font-weight:bold;color:#7c3aed;">
-
-📝 Subject
-
-</td>
-
-<td>
-
-{subject}
-
-</td>
-
-</tr>
-
-</table>
-
-<div
-style="margin-top:35px;
-background:#f8f5ff;
-padding:28px;
-border-left:6px solid #7c3aed;
-border-radius:14px;">
-
-<h3
-style="margin-top:0;color:#7c3aed;">
-
-💬 Message
-
-</h3>
-
-<p
-style="white-space:pre-wrap;
-line-height:30px;
-color:#444;
-font-size:16px;">
-
-{message}
-
-</p>
-
-</div>
-
-<hr
-style="margin:45px 0;border:none;border-top:1px solid #ececec;">
-
-<table width="100%">
-
-<tr>
-
-<td>
-
-<h3
-style="margin:0;color:#7c3aed;">
-
-⚡ Tech Stack
-
-</h3>
-
-<p
-style="margin-top:12px;
-color:#666;
-line-height:28px;">
-
-Python • Django • React • JavaScript • Tailwind CSS
-
-</p>
-
-</td>
-
-</tr>
-
-</table>
-
-<div
-style="margin-top:45px;
-text-align:center;">
-
-<a
-href="https://github.com/Omverma713"
-style="display:inline-block;
-padding:14px 30px;
-background:#111827;
-color:white;
-text-decoration:none;
-border-radius:10px;
-margin-right:10px;">
-
-GitHub
-
-</a>
-
-<a
-href="https://www.linkedin.com/in/om-verma-a4a098256/"
-style="display:inline-block;
-padding:14px 30px;
-background:#0A66C2;
-color:white;
-text-decoration:none;
-border-radius:10px;">
-
-LinkedIn
-
-</a>
-
-</div>
-
-</td>
-
-</tr>
-
-<tr>
-
-<td
-style="background:#fafafa;
-padding:25px;
-text-align:center;
-font-size:13px;
-color:#777;">
-
-Built with ❤️ by <strong>Om Verma</strong>
-
-</td>
-
-</tr>
-
-</table>
-
-</td>
-
-</tr>
-
-</table>
-
-</body>
-
-</html>
-"""
-        reply_subject = "Thank You For Contacting Me 🚀"
+        # ===================================        # ==========================================================
+        # 3D EMAIL TEMPLATE 1: TO PORTFOLIO OWNER (YOU)
+        # ==========================================================
         portfolio_url = request.build_absolute_uri('/')
         resume_url = request.build_absolute_uri('/resume/')
 
-        reply_html = f"""
+        html_message = f"""
+<!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="UTF-8">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Portfolio Message</title>
 </head>
+<body style="margin:0;padding:0;background-color:#070B14;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#070B14;padding:40px 15px;">
+  <tr>
+    <td align="center">
+      <!-- Outer 3D Card Shell -->
+      <table width="100%" max-width="640" cellpadding="0" cellspacing="0" style="max-width:640px;background:#0d1326;border-radius:28px;border:1px solid rgba(139,92,246,0.3);box-shadow:0 30px 70px rgba(0,0,0,0.8), 0 0 40px rgba(124,58,237,0.25);overflow:hidden;">
+        
+        <!-- 3D Glow Header -->
+        <tr>
+          <td style="padding:45px 35px 35px 35px;background:linear-gradient(135deg,#581c87,#7c3aed,#2563eb);text-align:center;position:relative;border-bottom:1px solid rgba(255,255,255,0.15);">
+            <div style="display:inline-block;padding:8px 18px;border-radius:50px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.25);margin-bottom:16px;">
+              <span style="color:#4ade80;font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;">⚡ NEW PORTFOLIO LEAD</span>
+            </div>
+            <h1 style="margin:0;color:#ffffff;font-size:32px;font-weight:900;letter-spacing:-0.5px;text-shadow:0 4px 15px rgba(0,0,0,0.5);">
+              Incoming Message
+            </h1>
+            <p style="margin:10px 0 0 0;color:#e9d5ff;font-size:15px;font-weight:500;">
+              Someone just submitted your portfolio contact form
+            </p>
+          </td>
+        </tr>
 
-<body style="margin:0;padding:0;background:#eef2ff;font-family:Arial,Helvetica,sans-serif;">
+        <!-- Card Content Body -->
+        <tr>
+          <td style="padding:35px 30px;">
+            
+            <!-- Sender Details Inset 3D Grid -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:25px;">
+              <tr>
+                <td style="padding:16px 20px;background:#131b35;border-radius:16px;border:1px solid rgba(255,255,255,0.08);box-shadow:inset 0 2px 4px rgba(0,0,0,0.4);margin-bottom:12px;">
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="32" style="font-size:20px;vertical-align:middle;">👤</td>
+                      <td style="padding-left:10px;">
+                        <div style="font-size:11px;color:#a78bfa;text-transform:uppercase;font-weight:700;letter-spacing:1px;">Sender Name</div>
+                        <div style="font-size:17px;color:#ffffff;font-weight:700;margin-top:2px;">{name}</div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr><td height="12"></td></tr>
+              <tr>
+                <td style="padding:16px 20px;background:#131b35;border-radius:16px;border:1px solid rgba(255,255,255,0.08);box-shadow:inset 0 2px 4px rgba(0,0,0,0.4);">
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="32" style="font-size:20px;vertical-align:middle;">📧</td>
+                      <td style="padding-left:10px;">
+                        <div style="font-size:11px;color:#a78bfa;text-transform:uppercase;font-weight:700;letter-spacing:1px;">Sender Email</div>
+                        <div style="font-size:16px;color:#38bdf8;font-weight:600;margin-top:2px;">
+                          <a href="mailto:{email}" style="color:#38bdf8;text-decoration:none;">{email}</a>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr><td height="12"></td></tr>
+              <tr>
+                <td style="padding:16px 20px;background:#131b35;border-radius:16px;border:1px solid rgba(255,255,255,0.08);box-shadow:inset 0 2px 4px rgba(0,0,0,0.4);">
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="32" style="font-size:20px;vertical-align:middle;">📝</td>
+                      <td style="padding-left:10px;">
+                        <div style="font-size:11px;color:#a78bfa;text-transform:uppercase;font-weight:700;letter-spacing:1px;">Subject</div>
+                        <div style="font-size:16px;color:#ffffff;font-weight:700;margin-top:2px;">{subject}</div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
 
-<table width="100%" cellpadding="0" cellspacing="0"
-style="background:#eef2ff;padding:40px 0;">
-
-<tr>
-
-<td align="center">
-
-<table width="680" cellpadding="0" cellspacing="0"
-style="background:#ffffff;border-radius:22px;overflow:hidden;
-box-shadow:0 15px 40px rgba(0,0,0,.12);">
-
-<!-- Hero -->
-
-<tr>
-
-<td
-style="padding:55px;
-text-align:center;
-background:linear-gradient(135deg,#6d28d9,#7c3aed,#8b5cf6);">
-
-<h1
-style="margin:0;
-color:white;
-font-size:36px;">
-
-👋 Thank You!
-
-</h1>
-
-<p
-style="margin-top:16px;
-font-size:18px;
-color:#ede9fe;">
-
-Hi {name},
-
-Thank you for contacting me.
-
-</p>
-
-</td>
-
-</tr>
-
-<!-- Body -->
-
-<tr>
-
-<td style="padding:45px;">
-
-<h2 style="color:#7c3aed;margin-top:0;">
-
-Your message has been received successfully.
-
-</h2>
-
-<p
-style="font-size:16px;
-line-height:30px;
-color:#555;">
-
-I really appreciate you taking the time to contact me.
-
-I'll carefully review your message and get back to you as soon as possible.
-
-Usually within 24-48 hours.
-
-</p>
-
-<div
-style="margin-top:35px;
-background:#f8f5ff;
-padding:25px;
-border-left:6px solid #7c3aed;
-border-radius:14px;">
-
-<h3 style="margin-top:0;color:#7c3aed;">
-
-📨 Your Message
-
-</h3>
-
-<p style="line-height:30px;color:#444;">
-
-<strong>Subject:</strong>
-
-{subject}
-
-</p>
-
-<p
-style="white-space:pre-wrap;
-line-height:28px;
-color:#555;">
-
+            <!-- 3D Message Box -->
+            <div style="padding:22px;background:#111827;border-radius:18px;border-left:5px solid #8b5cf6;border:1px solid rgba(139,92,246,0.25);border-left-width:5px;box-shadow:inset 0 3px 6px rgba(0,0,0,0.5);margin-bottom:30px;">
+              <div style="font-size:12px;color:#a78bfa;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">
+                💬 Message Content:
+              </div>
+              <div style="color:#e2e8f0;font-size:15px;line-height:1.7;white-space:pre-wrap;font-family:inherit;">
 {message}
+              </div>
+            </div>
 
-</p>
+            <!-- 3D Quick Action Reply Button -->
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td align="center">
+                  <a href="mailto:{email}?subject=Re:%20{subject}" style="display:inline-block;padding:16px 36px;border-radius:50px;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#ffffff;font-size:15px;font-weight:800;text-decoration:none;letter-spacing:0.5px;box-shadow:0 10px 25px rgba(124,58,237,0.5), inset 0 1px 1px rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.2);">
+                    ✉️ Reply Directly to {name}
+                  </a>
+                </td>
+              </tr>
+            </table>
 
-</div>
+          </td>
+        </tr>
 
-<div
-style="margin-top:40px;
-text-align:center;">
-        <a href="{portfolio_url}"
-style="
-display:inline-block;
-padding:14px 28px;
-background:#7c3aed;
-color:#ffffff;
-text-decoration:none;
-border-radius:10px;
-font-weight:bold;
-margin:8px;
-">
-🌐 Portfolio
-</a>
+        <!-- Footer -->
+        <tr>
+          <td style="padding:20px;background:#090d1a;text-align:center;border-top:1px solid rgba(255,255,255,0.06);">
+            <p style="margin:0;font-size:12px;color:#64748b;font-weight:500;">
+              Portfolio Lead Notification • Om Verma © 2026
+            </p>
+          </td>
+        </tr>
 
-<a href="https://github.com/Omverma713"
-style="
-display:inline-block;
-padding:14px 28px;
-background:#111827;
-color:#ffffff;
-text-decoration:none;
-border-radius:10px;
-font-weight:bold;
-margin:8px;
-">
-💻 GitHub
-</a>
-
-<a href="https://www.linkedin.com/in/om-verma-a4a098256/"
-style="
-display:inline-block;
-padding:14px 28px;
-background:#0A66C2;
-color:#ffffff;
-text-decoration:none;
-border-radius:10px;
-font-weight:bold;
-margin:8px;
-">
-💼 LinkedIn
-</a>
-
-<a href="{resume_url}"
-style="
-display:inline-block;
-padding:14px 28px;
-background:#16a34a;
-color:#ffffff;
-text-decoration:none;
-border-radius:10px;
-font-weight:bold;
-margin:8px;
-">
-📄 Resume
-</a>
-
-</div>
-
-<hr style="margin:45px 0;border:none;border-top:1px solid #ececec;">
-
-<p style="
-font-size:15px;
-color:#666;
-line-height:28px;
-">
-
-If you have any additional information to share, simply reply to this email.
-
-</p>
-
-<p style="
-margin-top:30px;
-font-size:15px;
-color:#666;
-">
-
-Regards,
-
-</p>
-
-<h2 style="
-margin-top:8px;
-margin-bottom:0;
-color:#7c3aed;
-">
-
-Om Verma
-
-</h2>
-
-<p style="
-margin-top:6px;
-color:#777;
-">
-
-Full Stack Developer
-
-</p>
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="
-background:#111827;
-padding:28px;
-text-align:center;
-color:#ffffff;
-">
-
-<p style="margin:0;font-size:15px;">
-
-© 2026 Om Verma • All Rights Reserved
-
-</p>
-
-<p style="
-margin-top:12px;
-color:#9ca3af;
-font-size:13px;
-">
-
-Built with Django • React • Tailwind CSS
-
-</p>
-
-</td>
-
-</tr>
-
+      </table>
+    </td>
+  </tr>
 </table>
-
-</td>
-
-</tr>
-
-</table>
-
 </body>
+</html>
+"""
 
+        # ==========================================================
+        # 3D EMAIL TEMPLATE 2: TO VISITOR (CONFIRMATION AUTO-REPLY)
+        # ==========================================================
+        reply_subject = "Thank You For Contacting Me 🚀"
+
+        reply_html = f"""
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank You For Contacting Me</title>
+</head>
+<body style="margin:0;padding:0;background-color:#070B14;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#070B14;padding:40px 15px;">
+  <tr>
+    <td align="center">
+      <!-- Outer 3D Card Shell -->
+      <table width="100%" max-width="640" cellpadding="0" cellspacing="0" style="max-width:640px;background:#0d1326;border-radius:28px;border:1px solid rgba(139,92,246,0.35);box-shadow:0 35px 80px rgba(0,0,0,0.85), 0 0 50px rgba(139,92,246,0.25);overflow:hidden;">
+        
+        <!-- 3D Header Hero -->
+        <tr>
+          <td style="padding:50px 35px 40px 35px;background:linear-gradient(135deg,#4c1d95,#7c3aed,#06b6d4);text-align:center;border-bottom:1px solid rgba(255,255,255,0.15);">
+            
+            <!-- 3D Floating Icon Ring -->
+            <div style="display:inline-block;width:72px;height:72px;line-height:72px;border-radius:24px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);box-shadow:0 15px 35px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.5);margin-bottom:18px;font-size:36px;">
+              🚀
+            </div>
+
+            <div style="display:block;margin-bottom:10px;">
+              <span style="display:inline-block;padding:6px 16px;border-radius:30px;background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.2);color:#38bdf8;font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;">
+                ● MESSAGE DELIVERED
+              </span>
+            </div>
+
+            <h1 style="margin:0;color:#ffffff;font-size:34px;font-weight:900;letter-spacing:-0.5px;text-shadow:0 4px 20px rgba(0,0,0,0.5);">
+              Thank You, {name}!
+            </h1>
+            <p style="margin:12px 0 0 0;color:#f3e8ff;font-size:16px;font-weight:500;">
+              Your message has landed safely in my inbox.
+            </p>
+          </td>
+        </tr>
+
+        <!-- Card Body -->
+        <tr>
+          <td style="padding:35px 30px;">
+            
+            <p style="margin:0 0 20px 0;color:#cbd5e1;font-size:15px;line-height:1.8;">
+              Hi <strong style="color:#ffffff;">{name}</strong>,<br>
+              Thank you for reaching out through my portfolio! I have received your message and will carefully review it. You can expect a response back from me within <strong style="color:#a78bfa;">24–48 hours</strong>.
+            </p>
+
+            <!-- 3D Summary Box -->
+            <div style="padding:20px;background:#131b35;border-radius:18px;border:1px solid rgba(255,255,255,0.08);box-shadow:inset 0 2px 5px rgba(0,0,0,0.4);margin-bottom:30px;">
+              <div style="font-size:11px;color:#a78bfa;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">
+                📨 Submitted Summary:
+              </div>
+              <div style="font-size:14px;color:#94a3b8;margin-bottom:6px;">
+                <strong style="color:#e2e8f0;">Subject:</strong> {subject}
+              </div>
+              <div style="font-size:14px;color:#cbd5e1;line-height:1.6;font-style:italic;background:#0d1326;padding:12px 16px;border-radius:12px;border-left:3px solid #7c3aed;margin-top:10px;">
+                "{message}"
+              </div>
+            </div>
+
+            <!-- 3D Action Buttons Grid -->
+            <div style="text-align:center;margin-bottom:10px;">
+              <p style="margin:0 0 16px 0;color:#94a3b8;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">
+                Explore My Work & Connect:
+              </p>
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center">
+                    <a href="{portfolio_url}" style="display:inline-block;padding:12px 22px;border-radius:14px;background:#7c3aed;color:#ffffff;font-size:13px;font-weight:700;text-decoration:none;margin:5px;box-shadow:0 8px 20px rgba(124,58,237,0.4), inset 0 1px 1px rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.15);">
+                      🌐 Portfolio
+                    </a>
+                    <a href="https://github.com/Omverma713" style="display:inline-block;padding:12px 22px;border-radius:14px;background:#1e293b;color:#ffffff;font-size:13px;font-weight:700;text-decoration:none;margin:5px;box-shadow:0 8px 20px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.1);">
+                      💻 GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/om-verma-a4a098256/" style="display:inline-block;padding:12px 22px;border-radius:14px;background:#0284c7;color:#ffffff;font-size:13px;font-weight:700;text-decoration:none;margin:5px;box-shadow:0 8px 20px rgba(2,132,199,0.4), inset 0 1px 1px rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.15);">
+                      💼 LinkedIn
+                    </a>
+                    <a href="{resume_url}" style="display:inline-block;padding:12px 22px;border-radius:14px;background:#059669;color:#ffffff;font-size:13px;font-weight:700;text-decoration:none;margin:5px;box-shadow:0 8px 20px rgba(5,150,105,0.4), inset 0 1px 1px rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.15);">
+                      📄 Resume
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+            <!-- Divider -->
+            <hr style="margin:30px 0;border:none;border-top:1px solid rgba(255,255,255,0.08);">
+
+            <!-- Signature -->
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td>
+                  <div style="font-size:14px;color:#94a3b8;">Warm regards,</div>
+                  <div style="font-size:20px;font-weight:900;color:#ffffff;margin-top:4px;letter-spacing:-0.3px;">Om Verma</div>
+                  <div style="font-size:13px;color:#a78bfa;font-weight:600;margin-top:2px;">Full Stack Developer • Django & React</div>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+
+        <!-- 3D Footer -->
+        <tr>
+          <td style="padding:22px;background:#090d1a;text-align:center;border-top:1px solid rgba(255,255,255,0.06);">
+            <p style="margin:0;font-size:12px;color:#64748b;font-weight:500;">
+              © 2026 Om Verma • Built with Django, React & Tailwind CSS
+            </p>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
 </html>
 """
 
