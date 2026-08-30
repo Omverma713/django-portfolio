@@ -10,11 +10,12 @@ def _send_emails_background(name, email, subject, message, subject_line, html_me
     """
     Sends emails asynchronously in background via Brevo HTTP REST API (Port 443).
     Works 100% on Render Free Tier and delivers both:
-    1. Notification to Portfolio Owner with visitor's reply-to.
+    1. Notification to Portfolio Owner with visitor's name as sender display and reply-to.
     2. Automated "Thank You" confirmation email to visitor from Om Verma <omverma.dev@gmail.com>.
     """
     brevo_key = getattr(settings, "BREVO_API_KEY", "")
     owner_email = getattr(settings, "EMAIL_HOST_USER", "omverma.dev@gmail.com")
+    clean_name = name.strip().title() if name and name.strip() else "Visitor"
 
     headers = {
         "accept": "application/json",
@@ -22,12 +23,12 @@ def _send_emails_background(name, email, subject, message, subject_line, html_me
         "content-type": "application/json"
     }
 
-    # 1. Send Notification to Portfolio Owner
+    # 1. Send Notification to Portfolio Owner (Shows visitor's name in your inbox)
     try:
         data_to_owner = {
-            "sender": {"name": "Portfolio Contact", "email": owner_email},
+            "sender": {"name": f"{clean_name} (Portfolio Lead)", "email": owner_email},
             "to": [{"email": owner_email, "name": "Om Verma"}],
-            "replyTo": {"email": email, "name": name or "Visitor"},
+            "replyTo": {"email": email, "name": clean_name},
             "subject": subject_line,
             "htmlContent": html_message
         }
@@ -40,7 +41,7 @@ def _send_emails_background(name, email, subject, message, subject_line, html_me
     try:
         data_to_visitor = {
             "sender": {"name": "Om Verma", "email": owner_email},
-            "to": [{"email": email, "name": name or "Visitor"}],
+            "to": [{"email": email, "name": clean_name}],
             "replyTo": {"email": owner_email, "name": "Om Verma"},
             "subject": reply_subject,
             "htmlContent": reply_html
@@ -90,12 +91,13 @@ def home(request):
         # Contact Form Data
         # ===========================
 
-        name = request.POST.get("name", "").strip()
+        raw_name = request.POST.get("name", "").strip()
+        name = raw_name.title() if raw_name else "Visitor"
         email = request.POST.get("email", "").strip()
         subject = request.POST.get("subject", "").strip()
         message = request.POST.get("message", "").strip()
 
-        subject_line = f"📩 New Portfolio Message • {subject}"
+        subject_line = f"📩 New Message from {name} • {subject}"
 
         # ====================================
         # PREMIUM EMAIL (To You)
