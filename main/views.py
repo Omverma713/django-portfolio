@@ -101,36 +101,60 @@ def home(request):
         # PREMIUM EMAIL (To You)
         # Part 2 continues from here...
         # ===================================        # ==========================================================
-        # 3D EMAIL TEMPLATE 1: TO PORTFOLIO OWNER (YOU)
+        # 3D ADAPTIVE EMAIL TEMPLATE 1: TO PORTFOLIO OWNER (YOU)
         # ==========================================================
         portfolio_url = request.build_absolute_uri('/')
         resume_url = request.build_absolute_uri('/resume/')
 
         html_message = f"""
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
 <title>New Portfolio Message</title>
+<style>
+  :root {{
+    color-scheme: light dark;
+    supported-color-schemes: light dark;
+  }}
+  body {{
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }}
+  @media (prefers-color-scheme: dark) {{
+    .body-bg {{ background-color: #070B14 !important; }}
+    .card-shell {{ background-color: #0d1326 !important; border-color: rgba(139,92,246,0.35) !important; box-shadow: 0 30px 70px rgba(0,0,0,0.85), 0 0 40px rgba(124,58,237,0.25) !important; }}
+    .inset-card {{ background-color: #131b35 !important; border-color: rgba(255,255,255,0.08) !important; }}
+    .message-box {{ background-color: #111827 !important; border-color: rgba(139,92,246,0.3) !important; }}
+    .text-title {{ color: #ffffff !important; }}
+    .text-body {{ color: #cbd5e1 !important; }}
+    .text-highlight {{ color: #a78bfa !important; }}
+    .footer-bg {{ background-color: #090d1a !important; border-color: rgba(255,255,255,0.06) !important; }}
+    .footer-text {{ color: #64748b !important; }}
+  }}
+</style>
 </head>
-<body style="margin:0;padding:0;background-color:#070B14;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#070B14;padding:40px 15px;">
+<body class="body-bg" style="margin:0;padding:0;background-color:#f1f5f9;-webkit-font-smoothing:antialiased;">
+<table class="body-bg" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f1f5f9;padding:40px 15px;">
   <tr>
     <td align="center">
-      <!-- Outer 3D Card Shell -->
-      <table width="100%" max-width="640" cellpadding="0" cellspacing="0" style="max-width:640px;background:#0d1326;border-radius:28px;border:1px solid rgba(139,92,246,0.3);box-shadow:0 30px 70px rgba(0,0,0,0.8), 0 0 40px rgba(124,58,237,0.25);overflow:hidden;">
+      <!-- 3D Card Shell -->
+      <table class="card-shell" width="100%" max-width="640" cellpadding="0" cellspacing="0" style="max-width:640px;background:#ffffff;border-radius:28px;border:1px solid #e2e8f0;box-shadow:0 20px 50px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);overflow:hidden;">
         
-        <!-- 3D Glow Header -->
+        <!-- 3D Hero Gradient Header -->
         <tr>
-          <td style="padding:45px 35px 35px 35px;background:linear-gradient(135deg,#581c87,#7c3aed,#2563eb);text-align:center;position:relative;border-bottom:1px solid rgba(255,255,255,0.15);">
-            <div style="display:inline-block;padding:8px 18px;border-radius:50px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.25);margin-bottom:16px;">
+          <td style="padding:45px 35px 35px 35px;background:linear-gradient(135deg,#581c87,#7c3aed,#2563eb);text-align:center;border-bottom:1px solid rgba(255,255,255,0.2);">
+            <div style="display:inline-block;padding:7px 18px;border-radius:50px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.25);margin-bottom:14px;">
               <span style="color:#4ade80;font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;">⚡ NEW PORTFOLIO LEAD</span>
             </div>
-            <h1 style="margin:0;color:#ffffff;font-size:32px;font-weight:900;letter-spacing:-0.5px;text-shadow:0 4px 15px rgba(0,0,0,0.5);">
+            <h1 style="margin:0;color:#ffffff;font-size:32px;font-weight:900;letter-spacing:-0.5px;text-shadow:0 4px 15px rgba(0,0,0,0.4);">
               Incoming Message
             </h1>
-            <p style="margin:10px 0 0 0;color:#e9d5ff;font-size:15px;font-weight:500;">
+            <p style="margin:8px 0 0 0;color:#ede9fe;font-size:15px;font-weight:500;">
               Someone just submitted your portfolio contact form
             </p>
           </td>
@@ -143,13 +167,13 @@ def home(request):
             <!-- Sender Details Inset 3D Grid -->
             <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:25px;">
               <tr>
-                <td style="padding:16px 20px;background:#131b35;border-radius:16px;border:1px solid rgba(255,255,255,0.08);box-shadow:inset 0 2px 4px rgba(0,0,0,0.4);margin-bottom:12px;">
+                <td class="inset-card" style="padding:16px 20px;background:#f8fafc;border-radius:16px;border:1px solid #e2e8f0;box-shadow:inset 0 1px 2px rgba(0,0,0,0.03);">
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                       <td width="32" style="font-size:20px;vertical-align:middle;">👤</td>
                       <td style="padding-left:10px;">
-                        <div style="font-size:11px;color:#a78bfa;text-transform:uppercase;font-weight:700;letter-spacing:1px;">Sender Name</div>
-                        <div style="font-size:17px;color:#ffffff;font-weight:700;margin-top:2px;">{name}</div>
+                        <div class="text-highlight" style="font-size:11px;color:#7c3aed;text-transform:uppercase;font-weight:700;letter-spacing:1px;">Sender Name</div>
+                        <div class="text-title" style="font-size:17px;color:#0f172a;font-weight:700;margin-top:2px;">{name}</div>
                       </td>
                     </tr>
                   </table>
@@ -157,14 +181,14 @@ def home(request):
               </tr>
               <tr><td height="12"></td></tr>
               <tr>
-                <td style="padding:16px 20px;background:#131b35;border-radius:16px;border:1px solid rgba(255,255,255,0.08);box-shadow:inset 0 2px 4px rgba(0,0,0,0.4);">
+                <td class="inset-card" style="padding:16px 20px;background:#f8fafc;border-radius:16px;border:1px solid #e2e8f0;box-shadow:inset 0 1px 2px rgba(0,0,0,0.03);">
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                       <td width="32" style="font-size:20px;vertical-align:middle;">📧</td>
                       <td style="padding-left:10px;">
-                        <div style="font-size:11px;color:#a78bfa;text-transform:uppercase;font-weight:700;letter-spacing:1px;">Sender Email</div>
-                        <div style="font-size:16px;color:#38bdf8;font-weight:600;margin-top:2px;">
-                          <a href="mailto:{email}" style="color:#38bdf8;text-decoration:none;">{email}</a>
+                        <div class="text-highlight" style="font-size:11px;color:#7c3aed;text-transform:uppercase;font-weight:700;letter-spacing:1px;">Sender Email</div>
+                        <div style="font-size:16px;color:#0284c7;font-weight:600;margin-top:2px;">
+                          <a href="mailto:{email}" style="color:#0284c7;text-decoration:none;">{email}</a>
                         </div>
                       </td>
                     </tr>
@@ -173,13 +197,13 @@ def home(request):
               </tr>
               <tr><td height="12"></td></tr>
               <tr>
-                <td style="padding:16px 20px;background:#131b35;border-radius:16px;border:1px solid rgba(255,255,255,0.08);box-shadow:inset 0 2px 4px rgba(0,0,0,0.4);">
+                <td class="inset-card" style="padding:16px 20px;background:#f8fafc;border-radius:16px;border:1px solid #e2e8f0;box-shadow:inset 0 1px 2px rgba(0,0,0,0.03);">
                   <table width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                       <td width="32" style="font-size:20px;vertical-align:middle;">📝</td>
                       <td style="padding-left:10px;">
-                        <div style="font-size:11px;color:#a78bfa;text-transform:uppercase;font-weight:700;letter-spacing:1px;">Subject</div>
-                        <div style="font-size:16px;color:#ffffff;font-weight:700;margin-top:2px;">{subject}</div>
+                        <div class="text-highlight" style="font-size:11px;color:#7c3aed;text-transform:uppercase;font-weight:700;letter-spacing:1px;">Subject</div>
+                        <div class="text-title" style="font-size:16px;color:#0f172a;font-weight:700;margin-top:2px;">{subject}</div>
                       </td>
                     </tr>
                   </table>
@@ -188,11 +212,11 @@ def home(request):
             </table>
 
             <!-- 3D Message Box -->
-            <div style="padding:22px;background:#111827;border-radius:18px;border-left:5px solid #8b5cf6;border:1px solid rgba(139,92,246,0.25);border-left-width:5px;box-shadow:inset 0 3px 6px rgba(0,0,0,0.5);margin-bottom:30px;">
-              <div style="font-size:12px;color:#a78bfa;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">
+            <div class="message-box" style="padding:22px;background:#f8fafc;border-radius:18px;border:1px solid #e2e8f0;border-left:5px solid #7c3aed;margin-bottom:30px;box-shadow:0 4px 12px rgba(0,0,0,0.03);">
+              <div class="text-highlight" style="font-size:12px;color:#7c3aed;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">
                 💬 Message Content:
               </div>
-              <div style="color:#e2e8f0;font-size:15px;line-height:1.7;white-space:pre-wrap;font-family:inherit;">
+              <div class="text-body" style="color:#334155;font-size:15px;line-height:1.7;white-space:pre-wrap;font-family:inherit;">
 {message}
               </div>
             </div>
@@ -201,7 +225,7 @@ def home(request):
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
                 <td align="center">
-                  <a href="mailto:{email}?subject=Re:%20{subject}" style="display:inline-block;padding:16px 36px;border-radius:50px;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#ffffff;font-size:15px;font-weight:800;text-decoration:none;letter-spacing:0.5px;box-shadow:0 10px 25px rgba(124,58,237,0.5), inset 0 1px 1px rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.2);">
+                  <a href="mailto:{email}?subject=Re:%20{subject}" style="display:inline-block;padding:16px 36px;border-radius:50px;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#ffffff;font-size:15px;font-weight:800;text-decoration:none;letter-spacing:0.5px;box-shadow:0 10px 25px rgba(124,58,237,0.4), inset 0 1px 1px rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.2);">
                     ✉️ Reply Directly to {name}
                   </a>
                 </td>
@@ -213,8 +237,8 @@ def home(request):
 
         <!-- Footer -->
         <tr>
-          <td style="padding:20px;background:#090d1a;text-align:center;border-top:1px solid rgba(255,255,255,0.06);">
-            <p style="margin:0;font-size:12px;color:#64748b;font-weight:500;">
+          <td class="footer-bg" style="padding:20px;background:#f8fafc;text-align:center;border-top:1px solid #e2e8f0;">
+            <p class="footer-text" style="margin:0;font-size:12px;color:#64748b;font-weight:500;">
               Portfolio Lead Notification • Om Verma © 2026
             </p>
           </td>
@@ -229,31 +253,57 @@ def home(request):
 """
 
         # ==========================================================
-        # 3D EMAIL TEMPLATE 2: TO VISITOR (CONFIRMATION AUTO-REPLY)
+        # 3D ADAPTIVE EMAIL TEMPLATE 2: TO VISITOR (CONFIRMATION)
         # ==========================================================
         reply_subject = "Thank You For Contacting Me 🚀"
 
         reply_html = f"""
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
 <title>Thank You For Contacting Me</title>
+<style>
+  :root {{
+    color-scheme: light dark;
+    supported-color-schemes: light dark;
+  }}
+  body {{
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }}
+  @media (prefers-color-scheme: dark) {{
+    .body-bg {{ background-color: #070B14 !important; }}
+    .card-shell {{ background-color: #0d1326 !important; border-color: rgba(139,92,246,0.35) !important; box-shadow: 0 35px 80px rgba(0,0,0,0.85), 0 0 50px rgba(139,92,246,0.25) !important; }}
+    .inset-card {{ background-color: #131b35 !important; border-color: rgba(255,255,255,0.08) !important; }}
+    .quote-box {{ background-color: #0d1326 !important; border-color: #7c3aed !important; color: #cbd5e1 !important; }}
+    .text-title {{ color: #ffffff !important; }}
+    .text-body {{ color: #cbd5e1 !important; }}
+    .text-highlight {{ color: #a78bfa !important; }}
+    .text-muted {{ color: #94a3b8 !important; }}
+    .divider-line {{ border-color: rgba(255,255,255,0.08) !important; }}
+    .footer-bg {{ background-color: #090d1a !important; border-color: rgba(255,255,255,0.06) !important; }}
+    .footer-text {{ color: #64748b !important; }}
+  }}
+</style>
 </head>
-<body style="margin:0;padding:0;background-color:#070B14;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#070B14;padding:40px 15px;">
+<body class="body-bg" style="margin:0;padding:0;background-color:#f1f5f9;-webkit-font-smoothing:antialiased;">
+<table class="body-bg" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f1f5f9;padding:40px 15px;">
   <tr>
     <td align="center">
       <!-- Outer 3D Card Shell -->
-      <table width="100%" max-width="640" cellpadding="0" cellspacing="0" style="max-width:640px;background:#0d1326;border-radius:28px;border:1px solid rgba(139,92,246,0.35);box-shadow:0 35px 80px rgba(0,0,0,0.85), 0 0 50px rgba(139,92,246,0.25);overflow:hidden;">
+      <table class="card-shell" width="100%" max-width="640" cellpadding="0" cellspacing="0" style="max-width:640px;background:#ffffff;border-radius:28px;border:1px solid #e2e8f0;box-shadow:0 25px 60px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);overflow:hidden;">
         
         <!-- 3D Header Hero -->
         <tr>
-          <td style="padding:50px 35px 40px 35px;background:linear-gradient(135deg,#4c1d95,#7c3aed,#06b6d4);text-align:center;border-bottom:1px solid rgba(255,255,255,0.15);">
+          <td style="padding:50px 35px 40px 35px;background:linear-gradient(135deg,#4c1d95,#7c3aed,#06b6d4);text-align:center;border-bottom:1px solid rgba(255,255,255,0.2);">
             
             <!-- 3D Floating Icon Ring -->
-            <div style="display:inline-block;width:72px;height:72px;line-height:72px;border-radius:24px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);box-shadow:0 15px 35px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.5);margin-bottom:18px;font-size:36px;">
+            <div style="display:inline-block;width:72px;height:72px;line-height:72px;border-radius:24px;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);box-shadow:0 15px 35px rgba(0,0,0,0.35), inset 0 1px 2px rgba(255,255,255,0.5);margin-bottom:18px;font-size:36px;">
               🚀
             </div>
 
@@ -263,10 +313,10 @@ def home(request):
               </span>
             </div>
 
-            <h1 style="margin:0;color:#ffffff;font-size:34px;font-weight:900;letter-spacing:-0.5px;text-shadow:0 4px 20px rgba(0,0,0,0.5);">
+            <h1 style="margin:0;color:#ffffff;font-size:34px;font-weight:900;letter-spacing:-0.5px;text-shadow:0 4px 20px rgba(0,0,0,0.4);">
               Thank You, {name}!
             </h1>
-            <p style="margin:12px 0 0 0;color:#f3e8ff;font-size:16px;font-weight:500;">
+            <p style="margin:10px 0 0 0;color:#f3e8ff;font-size:16px;font-weight:500;">
               Your message has landed safely in my inbox.
             </p>
           </td>
@@ -276,42 +326,42 @@ def home(request):
         <tr>
           <td style="padding:35px 30px;">
             
-            <p style="margin:0 0 20px 0;color:#cbd5e1;font-size:15px;line-height:1.8;">
-              Hi <strong style="color:#ffffff;">{name}</strong>,<br>
-              Thank you for reaching out through my portfolio! I have received your message and will carefully review it. You can expect a response back from me within <strong style="color:#a78bfa;">24–48 hours</strong>.
+            <p class="text-body" style="margin:0 0 20px 0;color:#334155;font-size:15px;line-height:1.8;">
+              Hi <strong class="text-title" style="color:#0f172a;">{name}</strong>,<br>
+              Thank you for reaching out through my portfolio! I have received your message and will carefully review it. You can expect a response back from me within <strong class="text-highlight" style="color:#7c3aed;">24–48 hours</strong>.
             </p>
 
             <!-- 3D Summary Box -->
-            <div style="padding:20px;background:#131b35;border-radius:18px;border:1px solid rgba(255,255,255,0.08);box-shadow:inset 0 2px 5px rgba(0,0,0,0.4);margin-bottom:30px;">
-              <div style="font-size:11px;color:#a78bfa;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">
+            <div class="inset-card" style="padding:20px;background:#f8fafc;border-radius:18px;border:1px solid #e2e8f0;margin-bottom:30px;box-shadow:inset 0 1px 3px rgba(0,0,0,0.03);">
+              <div class="text-highlight" style="font-size:11px;color:#7c3aed;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">
                 📨 Submitted Summary:
               </div>
-              <div style="font-size:14px;color:#94a3b8;margin-bottom:6px;">
-                <strong style="color:#e2e8f0;">Subject:</strong> {subject}
+              <div class="text-muted" style="font-size:14px;color:#64748b;margin-bottom:6px;">
+                <strong class="text-title" style="color:#0f172a;">Subject:</strong> {subject}
               </div>
-              <div style="font-size:14px;color:#cbd5e1;line-height:1.6;font-style:italic;background:#0d1326;padding:12px 16px;border-radius:12px;border-left:3px solid #7c3aed;margin-top:10px;">
+              <div class="quote-box" style="font-size:14px;color:#334155;line-height:1.6;font-style:italic;background:#ffffff;padding:12px 16px;border-radius:12px;border:1px solid #e2e8f0;border-left:4px solid #7c3aed;margin-top:10px;">
                 "{message}"
               </div>
             </div>
 
             <!-- 3D Action Buttons Grid -->
             <div style="text-align:center;margin-bottom:10px;">
-              <p style="margin:0 0 16px 0;color:#94a3b8;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">
+              <p class="text-muted" style="margin:0 0 16px 0;color:#64748b;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">
                 Explore My Work & Connect:
               </p>
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td align="center">
-                    <a href="{portfolio_url}" style="display:inline-block;padding:12px 22px;border-radius:14px;background:#7c3aed;color:#ffffff;font-size:13px;font-weight:700;text-decoration:none;margin:5px;box-shadow:0 8px 20px rgba(124,58,237,0.4), inset 0 1px 1px rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.15);">
+                    <a href="{portfolio_url}" style="display:inline-block;padding:12px 22px;border-radius:14px;background:#7c3aed;color:#ffffff;font-size:13px;font-weight:700;text-decoration:none;margin:5px;box-shadow:0 8px 20px rgba(124,58,237,0.35), inset 0 1px 1px rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.15);">
                       🌐 Portfolio
                     </a>
-                    <a href="https://github.com/Omverma713" style="display:inline-block;padding:12px 22px;border-radius:14px;background:#1e293b;color:#ffffff;font-size:13px;font-weight:700;text-decoration:none;margin:5px;box-shadow:0 8px 20px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.1);">
+                    <a href="https://github.com/Omverma713" style="display:inline-block;padding:12px 22px;border-radius:14px;background:#0f172a;color:#ffffff;font-size:13px;font-weight:700;text-decoration:none;margin:5px;box-shadow:0 8px 20px rgba(15,23,42,0.35), inset 0 1px 1px rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.1);">
                       💻 GitHub
                     </a>
-                    <a href="https://www.linkedin.com/in/om-verma-a4a098256/" style="display:inline-block;padding:12px 22px;border-radius:14px;background:#0284c7;color:#ffffff;font-size:13px;font-weight:700;text-decoration:none;margin:5px;box-shadow:0 8px 20px rgba(2,132,199,0.4), inset 0 1px 1px rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.15);">
+                    <a href="https://www.linkedin.com/in/om-verma-a4a098256/" style="display:inline-block;padding:12px 22px;border-radius:14px;background:#0284c7;color:#ffffff;font-size:13px;font-weight:700;text-decoration:none;margin:5px;box-shadow:0 8px 20px rgba(2,132,199,0.35), inset 0 1px 1px rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.15);">
                       💼 LinkedIn
                     </a>
-                    <a href="{resume_url}" style="display:inline-block;padding:12px 22px;border-radius:14px;background:#059669;color:#ffffff;font-size:13px;font-weight:700;text-decoration:none;margin:5px;box-shadow:0 8px 20px rgba(5,150,105,0.4), inset 0 1px 1px rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.15);">
+                    <a href="{resume_url}" style="display:inline-block;padding:12px 22px;border-radius:14px;background:#059669;color:#ffffff;font-size:13px;font-weight:700;text-decoration:none;margin:5px;box-shadow:0 8px 20px rgba(5,150,105,0.35), inset 0 1px 1px rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.15);">
                       📄 Resume
                     </a>
                   </td>
@@ -320,15 +370,15 @@ def home(request):
             </div>
 
             <!-- Divider -->
-            <hr style="margin:30px 0;border:none;border-top:1px solid rgba(255,255,255,0.08);">
+            <hr class="divider-line" style="margin:30px 0;border:none;border-top:1px solid #e2e8f0;">
 
             <!-- Signature -->
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
                 <td>
-                  <div style="font-size:14px;color:#94a3b8;">Warm regards,</div>
-                  <div style="font-size:20px;font-weight:900;color:#ffffff;margin-top:4px;letter-spacing:-0.3px;">Om Verma</div>
-                  <div style="font-size:13px;color:#a78bfa;font-weight:600;margin-top:2px;">Full Stack Developer • Django & React</div>
+                  <div class="text-muted" style="font-size:14px;color:#64748b;">Warm regards,</div>
+                  <div class="text-title" style="font-size:20px;font-weight:900;color:#0f172a;margin-top:4px;letter-spacing:-0.3px;">Om Verma</div>
+                  <div class="text-highlight" style="font-size:13px;color:#7c3aed;font-weight:600;margin-top:2px;">Full Stack Developer • Django & React</div>
                 </td>
               </tr>
             </table>
@@ -338,8 +388,8 @@ def home(request):
 
         <!-- 3D Footer -->
         <tr>
-          <td style="padding:22px;background:#090d1a;text-align:center;border-top:1px solid rgba(255,255,255,0.06);">
-            <p style="margin:0;font-size:12px;color:#64748b;font-weight:500;">
+          <td class="footer-bg" style="padding:22px;background:#f8fafc;text-align:center;border-top:1px solid #e2e8f0;">
+            <p class="footer-text" style="margin:0;font-size:12px;color:#64748b;font-weight:500;">
               © 2026 Om Verma • Built with Django, React & Tailwind CSS
             </p>
           </td>
