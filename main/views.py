@@ -8,40 +8,48 @@ import threading
 
 def _send_emails_background(name, email, subject, message, subject_line, html_message, reply_subject, reply_html):
     """
-    Sends emails in a detached background thread using SMTP so the visitor
-    receives the email from your Gmail (e.g. Om Verma <omverma.dev@gmail.com>).
+    Sends emails asynchronously in background via Brevo HTTP REST API (Port 443).
+    Works 100% on Render Free Tier and delivers both:
+    1. Notification to Portfolio Owner with visitor's reply-to.
+    2. Automated "Thank You" confirmation email to visitor from Om Verma <omverma.dev@gmail.com>.
     """
-    sender_email = settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER
-    from_header = f"Om Verma <{sender_email}>"
+    brevo_key = getattr(settings, "BREVO_API_KEY", "")
+    owner_email = getattr(settings, "EMAIL_HOST_USER", "omverma.dev@gmail.com")
+
+    headers = {
+        "accept": "application/json",
+        "api-key": brevo_key,
+        "content-type": "application/json"
+    }
 
     # 1. Send Notification to Portfolio Owner
     try:
-        msg_to_owner = EmailMessage(
-            subject=subject_line,
-            body=html_message,
-            from_email=from_header,
-            to=[settings.EMAIL_HOST_USER],
-            reply_to=[email],
-        )
-        msg_to_owner.content_subtype = "html"
-        msg_to_owner.send(fail_silently=False)
-        print(f"[ASYNC SMTP] Successfully delivered notification to {settings.EMAIL_HOST_USER}")
+        data_to_owner = {
+            "sender": {"name": "Portfolio Contact", "email": owner_email},
+            "to": [{"email": owner_email, "name": "Om Verma"}],
+            "replyTo": {"email": email, "name": name or "Visitor"},
+            "subject": subject_line,
+            "htmlContent": html_message
+        }
+        res1 = requests.post("https://api.brevo.com/v3/smtp/email", headers=headers, json=data_to_owner, timeout=10)
+        print(f"[BREVO ASYNC] Owner notification: {res1.status_code}")
     except Exception as e:
-        print(f"[ASYNC SMTP ERROR] Failed delivering to owner: {e}")
+        print(f"[BREVO ASYNC ERROR] Failed sending to owner: {e}")
 
-    # 2. Send Auto-Reply to Visitor
+    # 2. Send Auto-Reply Confirmation to Visitor
     try:
-        msg_to_visitor = EmailMessage(
-            subject=reply_subject,
-            body=reply_html,
-            from_email=from_header,
-            to=[email],
-        )
-        msg_to_visitor.content_subtype = "html"
-        msg_to_visitor.send(fail_silently=False)
-        print(f"[ASYNC SMTP] Successfully delivered auto-reply to visitor {email}")
+        data_to_visitor = {
+            "sender": {"name": "Om Verma", "email": owner_email},
+            "to": [{"email": email, "name": name or "Visitor"}],
+            "replyTo": {"email": owner_email, "name": "Om Verma"},
+            "subject": reply_subject,
+            "htmlContent": reply_html
+        }
+        res2 = requests.post("https://api.brevo.com/v3/smtp/email", headers=headers, json=data_to_visitor, timeout=10)
+        print(f"[BREVO ASYNC] Visitor auto-reply: {res2.status_code}")
     except Exception as e:
-        print(f"[ASYNC SMTP ERROR] Failed delivering auto-reply to visitor {email}: {e}")
+        print(f"[BREVO ASYNC ERROR] Failed sending to visitor: {e}")
+
 
 
 def home(request):
