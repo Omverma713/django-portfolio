@@ -1,41 +1,46 @@
-<footer class="py-12 border-t border-white/10">
+<footer class="relative py-12 overflow-hidden border-t border-white/5 bg-[#050814]/70 backdrop-blur-2xl">
+    <!-- Ambient Multi-color Background Glow -->
+    <div class="absolute -top-16 left-1/2 -translate-x-1/2 w-80 sm:w-[500px] h-32 bg-gradient-to-r from-violet-600/20 via-pink-500/10 to-cyan-500/20 blur-3xl rounded-full pointer-events-none"></div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col items-center justify-center gap-4 relative z-10">
+        <!-- Interactive Glowing Gradient Pill Wrapper -->
+        <div class="group relative p-[1px] rounded-full bg-gradient-to-r from-violet-500/30 via-pink-500/20 to-cyan-500/30 hover:from-violet-500 hover:via-pink-500 hover:to-cyan-400 transition-all duration-700 hover:shadow-[0_0_35px_rgba(139,92,246,0.35)] hover:-translate-y-0.5">
+            
+            <!-- Inner Glass Pill -->
+            <div class="relative overflow-hidden rounded-full bg-[#070B16]/90 backdrop-blur-2xl px-6 sm:px-8 py-3 sm:py-3.5 flex items-center gap-2.5 sm:gap-3 text-xs sm:text-sm">
+                
+                <!-- Hover Shimmer Light Sweep -->
+                <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none"></div>
 
-        <h2 class="text-3xl font-black">
+                <!-- Text -->
+                <span class="text-gray-300 font-medium tracking-wide">
+                    Made with
+                </span>
 
-            OM<span class="text-purple-500">.</span>
+                <!-- Animated Glowing Heart -->
+                <span class="inline-flex items-center justify-center text-rose-500 text-sm animate-pulse group-hover:scale-125 group-hover:rotate-6 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(244,63,94,0.6)]">
+                    <i class="fas fa-heart"></i>
+                </span>
 
-        </h2>
+                <span class="text-gray-400 font-medium">by</span>
 
-        <p class="text-gray-400">
-
-            © 2026 Om Verma. Built with Django + Tailwind CSS.
-
-        </p>
-
-        <div class="flex gap-6 text-2xl">
-
-            <a href="#" class="hover:text-purple-400 duration-300">
-
-                <i class="fab fa-github"></i>
-
-            </a>
-
-            <a href="#" class="hover:text-blue-400 duration-300">
-
-                <i class="fab fa-linkedin"></i>
-
-            </a>
-
-            <a href="#" class="hover:text-pink-400 duration-300">
-
-                <i class="fab fa-instagram"></i>
-
-            </a>
-
+                <!-- Interactive LinkedIn Pill Link -->
+                <a href="https://www.linkedin.com/in/om-verma-a4a098256/" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/25 hover:bg-[#0A66C2]/15 hover:border-[#0A66C2]/50 hover:shadow-[0_0_15px_rgba(10,102,194,0.35)] transition-all duration-300 group/btn">
+                    <span class="font-semibold text-violet-300 group-hover/btn:text-white transition-colors duration-300">
+                        Om Verma
+                    </span>
+                    <i class="fa-brands fa-linkedin text-[#0A66C2] text-sm group-hover/btn:scale-115 group-hover/btn:rotate-6 transition-all duration-300"></i>
+                </a>
+            </div>
         </div>
 
+        <!-- Copyright / Trademark Line -->
+        <p class="text-xs text-gray-500 font-normal tracking-wider">
+            &copy; 2026 Om Verma. All Rights Reserved.
+        </p>
     </div>
-
 </footer>
+

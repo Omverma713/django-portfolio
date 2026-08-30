@@ -240,7 +240,7 @@ style="margin-top:45px;
 text-align:center;">
 
 <a
-href="https://github.com/YOUR_USERNAME"
+href="https://github.com/Omverma713"
 style="display:inline-block;
 padding:14px 30px;
 background:#111827;
@@ -254,7 +254,7 @@ GitHub
 </a>
 
 <a
-href="https://linkedin.com/in/YOUR_USERNAME"
+href="https://www.linkedin.com/in/om-verma-a4a098256/"
 style="display:inline-block;
 padding:14px 30px;
 background:#0A66C2;
@@ -449,7 +449,7 @@ margin:8px;
 🌐 Portfolio
 </a>
 
-<a href="https://github.com/YOUR_USERNAME"
+<a href="https://github.com/Omverma713"
 style="
 display:inline-block;
 padding:14px 28px;
@@ -463,7 +463,7 @@ margin:8px;
 💻 GitHub
 </a>
 
-<a href="https://linkedin.com/in/YOUR_USERNAME"
+<a href="https://www.linkedin.com/in/om-verma-a4a098256/"
 style="
 display:inline-block;
 padding:14px 28px;
@@ -605,3 +605,7 @@ Built with Django • React • Tailwind CSS
             "TURNSTILE_SITE_KEY": settings.TURNSTILE_SITE_KEY,
         },
     )
+
+
+def resume_view(request):
+    return render(request, "main/resume_soon.html")

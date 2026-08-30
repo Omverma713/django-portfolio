@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}
+Resume • Uploading Soon | Om Verma
+{% endblock %}
+
+{% block content %}
+<main class="min-h-screen flex items-center justify-center relative px-4 sm:px-6 lg:px-8 py-20 overflow-hidden">
+    <!-- Ambient Background Glows -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[550px] h-[350px] sm:h-[550px] bg-violet-600/20 blur-[140px] sm:blur-[180px] rounded-full pointer-events-none"></div>
+    <div class="absolute bottom-10 right-1/4 w-[300px] h-[300px] bg-cyan-500/15 blur-[120px] rounded-full pointer-events-none"></div>
+
+    <!-- Main Card -->
+    <div class="relative z-10 max-w-xl w-full text-center">
+        <div class="p-8 sm:p-12 rounded-[35px] border border-white/10 bg-white/[0.04] backdrop-blur-2xl shadow-[0_0_60px_rgba(139,92,246,0.15)] relative overflow-hidden">
+            
+            <!-- Shimmer Accent Top Line -->
+            <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-violet-500 to-transparent"></div>
+
+            <!-- Animated Document Icon Badge -->
+            <div class="relative mx-auto w-24 h-24 sm:w-28 sm:h-28 mb-8 flex items-center justify-center">
+                <!-- Outer Pulse Ring -->
+                <div class="absolute inset-0 rounded-3xl bg-violet-500/20 animate-ping opacity-75"></div>
+                <!-- Inner Icon Box -->
+                <div class="relative w-full h-full rounded-3xl bg-gradient-to-br from-violet-600/30 to-cyan-500/20 border border-violet-500/40 backdrop-blur-xl flex items-center justify-center shadow-[0_0_30px_rgba(139,92,246,0.3)]">
+                    <i class="fas fa-file-arrow-up text-4xl sm:text-5xl text-violet-300"></i>
+                </div>
+            </div>
+
+            <!-- Status Pill -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-violet-500/30 bg-violet-500/10 mb-6">
+                <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                <span class="text-xs sm:text-sm font-medium text-cyan-300 tracking-wide">
+                    Document in Progress
+                </span>
+            </div>
+
+            <!-- Heading -->
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-4">
+                Uploading <span class="bg-gradient-to-r from-violet-400 via-purple-300 to-cyan-400 bg-clip-text text-transparent">Soon</span>
+            </h1>
+
+            <!-- Description -->
+            <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-8 max-w-md mx-auto">
+                I am currently fine-tuning and polishing my latest resume with my recent Full-Stack projects & experiences. It will be available for direct download very soon!
+            </p>
+
+            <!-- Quick Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+                <!-- Back to Home -->
+                <a href="/"
+                   class="w-full sm:w-auto px-7 py-3.5 rounded-full bg-violet-600 hover:bg-violet-500 text-white font-semibold text-sm shadow-[0_0_25px_rgba(139,92,246,0.4)] transition-all duration-300 flex items-center justify-center gap-2 group">
+                    <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform duration-300"></i>
+                    <span>Back to Portfolio</span>
+                </a>
+
+                <!-- LinkedIn Alternative -->
+                <a href="https://www.linkedin.com/in/om-verma-a4a098256/"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="w-full sm:w-auto px-7 py-3.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 hover:border-violet-500/40 text-gray-200 font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-linkedin text-[#0A66C2]"></i>
+                    <span>View LinkedIn</span>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Footer note -->
+        <p class="text-xs text-gray-500 mt-6 tracking-wide">
+            &copy; 2026 Om Verma • All Rights Reserved.
+        </p>
+    </div>
+</main>
+{% endblock %}
