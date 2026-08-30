@@ -299,7 +299,7 @@ Built with ❤️ by <strong>Om Verma</strong>
 
 </html>
 """
-                # ====================================
+        # ====================================
         # Send Email To You
         # ====================================
 
@@ -307,18 +307,26 @@ Built with ❤️ by <strong>Om Verma</strong>
             resend.Emails.send({
                 "from": "Portfolio <onboarding@resend.dev>",
                 "to": settings.EMAIL_HOST_USER,
+                "reply_to": email,
                 "subject": subject_line,
                 "html": html_message,
             })
         except Exception as e:
-            print(e)
-            raise
+            print("Error sending portfolio message:", e)
+            messages.error(
+                request,
+                "Sorry, there was an error sending your message. Please try again or reach out directly via email."
+            )
+            return redirect("/#contact")
 
         # ====================================
-        # Premium Auto Reply
+        # Premium Auto Reply (Safely handled)
         # ====================================
 
         reply_subject = "Thank You For Contacting Me 🚀"
+
+        portfolio_url = request.build_absolute_uri('/')
+        resume_url = request.build_absolute_uri('/resume/')
 
         reply_html = f"""
 <html>
@@ -435,7 +443,7 @@ color:#555;">
 <div
 style="margin-top:40px;
 text-align:center;">
-        <a href="https://YOUR-PORTFOLIO.com"
+        <a href="{portfolio_url}"
 style="
 display:inline-block;
 padding:14px 28px;
@@ -477,7 +485,7 @@ margin:8px;
 💼 LinkedIn
 </a>
 
-<a href="https://YOUR-PORTFOLIO.com/resume.pdf"
+<a href="{resume_url}"
 style="
 display:inline-block;
 padding:14px 28px;
@@ -583,13 +591,14 @@ Built with Django • React • Tailwind CSS
         try:
             resend.Emails.send({
                 "from": "Om Verma <onboarding@resend.dev>",
-                "to":email,
+                "to": email,
                 "subject": reply_subject,
                 "html": reply_html,
             })
         except Exception as e:
-            print(e)
-            raise
+            # Resend default sandbox (onboarding@resend.dev) only allows sending to the account owner's email.
+            # To send auto-replies to any visitor, verify a custom domain in your Resend dashboard.
+            print("Auto-reply skipped/failed (requires verified domain in Resend):", e)
 
         messages.success(
             request,
