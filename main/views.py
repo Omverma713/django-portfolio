@@ -1,47 +1,52 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-import resend
 from django.conf import settings
+from django.core.mail import EmailMessage
 import requests
 import threading
 
 
 def _send_emails_background(name, email, subject, message, subject_line, html_message, reply_subject, reply_html):
     """
-    Sends emails in a detached background thread so the user experiences zero lag.
+    Sends emails in a detached background thread using SMTP so the visitor
+    receives the email from your Gmail (e.g. Om Verma <omverma.dev@gmail.com>).
     """
-    resend.api_key = getattr(settings, "RESEND_API_KEY", None)
+    sender_email = settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER
+    from_header = f"Om Verma <{sender_email}>"
 
     # 1. Send Notification to Portfolio Owner
     try:
-        resend.Emails.send({
-            "from": "Portfolio <onboarding@resend.dev>",
-            "to": settings.EMAIL_HOST_USER,
-            "reply_to": email,
-            "subject": subject_line,
-            "html": html_message,
-        })
-        print(f"[ASYNC EMAIL] Successfully delivered notification to {settings.EMAIL_HOST_USER}")
+        msg_to_owner = EmailMessage(
+            subject=subject_line,
+            body=html_message,
+            from_email=from_header,
+            to=[settings.EMAIL_HOST_USER],
+            reply_to=[email],
+        )
+        msg_to_owner.content_subtype = "html"
+        msg_to_owner.send(fail_silently=False)
+        print(f"[ASYNC SMTP] Successfully delivered notification to {settings.EMAIL_HOST_USER}")
     except Exception as e:
-        print(f"[ASYNC EMAIL ERROR] Failed delivering to owner: {e}")
+        print(f"[ASYNC SMTP ERROR] Failed delivering to owner: {e}")
 
     # 2. Send Auto-Reply to Visitor
     try:
-        resend.Emails.send({
-            "from": "Om Verma <onboarding@resend.dev>",
-            "to": email,
-            "subject": reply_subject,
-            "html": reply_html,
-        })
-        print(f"[ASYNC EMAIL] Successfully delivered auto-reply to {email}")
+        msg_to_visitor = EmailMessage(
+            subject=reply_subject,
+            body=reply_html,
+            from_email=from_header,
+            to=[email],
+        )
+        msg_to_visitor.content_subtype = "html"
+        msg_to_visitor.send(fail_silently=False)
+        print(f"[ASYNC SMTP] Successfully delivered auto-reply to visitor {email}")
     except Exception as e:
-        print(f"[ASYNC EMAIL NOTE] Visitor auto-reply requires verified domain on Resend: {e}")
+        print(f"[ASYNC SMTP ERROR] Failed delivering auto-reply to visitor {email}: {e}")
 
 
 def home(request):
 
     if request.method == "POST":
-        resend.api_key = settings.RESEND_API_KEY
         # ===========================
         # Cloudflare Turnstile Check
         # ===========================
