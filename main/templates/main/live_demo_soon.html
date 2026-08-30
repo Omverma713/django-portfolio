@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}
+Live Demo • Uploading Soon | Om Verma
+{% endblock %}
+
+{% block content %}
+<main class="min-h-screen flex items-center justify-center relative px-4 sm:px-6 lg:px-8 py-12 sm:py-20 overflow-x-hidden">
+    <!-- Ambient Background Glows -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] sm:w-[500px] h-[280px] sm:h-[500px] bg-cyan-600/20 blur-[100px] sm:blur-[180px] rounded-full pointer-events-none"></div>
+    <div class="absolute bottom-10 right-1/4 w-[240px] sm:w-[350px] h-[240px] sm:h-[350px] bg-violet-600/20 blur-[100px] sm:blur-[140px] rounded-full pointer-events-none"></div>
+
+    <!-- Main Card -->
+    <div class="relative z-10 max-w-xl w-full text-center my-auto">
+        <div class="p-6 sm:p-10 md:p-12 rounded-3xl sm:rounded-[35px] border border-white/10 bg-white/[0.04] backdrop-blur-2xl shadow-[0_0_60px_rgba(6,182,212,0.15)] relative overflow-hidden">
+            
+            <!-- Shimmer Accent Top Line -->
+            <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+
+            <!-- Animated Icon Badge -->
+            <div class="relative mx-auto w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 mb-6 sm:mb-8 flex items-center justify-center">
+                <!-- Outer Pulse Ring -->
+                <div class="absolute inset-0 rounded-3xl bg-cyan-500/20 animate-ping opacity-75"></div>
+                <!-- Inner Icon Box -->
+                <div class="relative w-full h-full rounded-2xl sm:rounded-3xl bg-gradient-to-br from-cyan-600/30 to-violet-500/20 border border-cyan-500/40 backdrop-blur-xl flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.3)]">
+                    <i class="fas fa-globe text-3xl sm:text-4xl md:text-5xl text-cyan-300"></i>
+                </div>
+            </div>
+
+            <!-- Status Pill -->
+            <div class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 mb-4 sm:mb-6">
+                <span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                <span class="text-xs sm:text-sm font-medium text-cyan-300 tracking-wide">
+                    Live Demo in Deployment
+                </span>
+            </div>
+
+            <!-- Heading -->
+            <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-3 sm:mb-4">
+                Live Site <span class="bg-gradient-to-r from-cyan-400 via-teal-300 to-violet-400 bg-clip-text text-transparent">Uploading Soon</span>
+            </h1>
+
+            <!-- Description -->
+            <p class="text-gray-300 text-xs sm:text-sm md:text-base leading-relaxed mb-6 sm:mb-8 max-w-md mx-auto">
+                The live production deployment and interactive demo for this project are currently being set up and will be available online soon!
+            </p>
+
+            <!-- Quick Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full">
+                <!-- Back to Projects -->
+                <a href="/#projects"
+                   class="w-full sm:w-auto px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-cyan-600 hover:bg-cyan-500 active:scale-95 text-white font-semibold text-xs sm:text-sm shadow-[0_0_25px_rgba(6,182,212,0.4)] transition-all duration-300 flex items-center justify-center gap-2 group">
+                    <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform duration-300"></i>
+                    <span>Back to Projects</span>
+                </a>
+
+                <!-- GitHub Profile -->
+                <a href="https://github.com/Omverma713"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="w-full sm:w-auto px-6 sm:px-7 py-3 sm:py-3.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 hover:border-cyan-500/40 active:scale-95 text-gray-200 font-semibold text-xs sm:text-sm transition-all duration-300 flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-github text-white"></i>
+                    <span>View GitHub</span>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Footer note -->
+        <p class="text-[11px] sm:text-xs text-gray-500 mt-4 sm:mt-6 tracking-wide">
+            &copy; 2026 Om Verma • All Rights Reserved.
+        </p>
+    </div>
+</main>
+{% endblock %}

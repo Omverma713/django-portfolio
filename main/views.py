@@ -608,4 +608,18 @@ Built with Django • React • Tailwind CSS
 
 
 def resume_view(request):
-    return render(request, "main/resume_soon.html")
+    return render(request, "main/resume_soon.html")
+
+
+def uploading_soon(request):
+    return render(request, "main/uploading_soon.html")
+
+
+def live_demo_soon(request):
+    return render(request, "main/live_demo_soon.html")
+
+
+def github_soon(request):
+    return render(request, "main/github_soon.html")
+
+
