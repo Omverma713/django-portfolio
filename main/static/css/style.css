@@ -1,3 +1,13 @@
+
+/* Remove unwanted scrollbar caused by overflow-x:hidden on body only */
+html {
+    overflow-x: hidden;
+    scrollbar-width: none; /* Firefox - hide html-level scrollbar (Lenis uses body) */
+}
+
+html::-webkit-scrollbar {
+    display: none; /* Chrome/Safari - hide html-level scrollbar */
+}
 /* Blink animation for status dot */
 @keyframes blink {
     0%, 100% { opacity: 1; box-shadow: 0 0 6px 3px rgba(74, 222, 128, 0.7); }
@@ -266,3 +276,5 @@ nav ul li a:hover::after{
 .orbit {
     animation: rotateSlow 30s linear infinite;
 }
+
+

@@ -1,17 +1,20 @@
 const lenis = new Lenis({
     duration:1.2,
-    smoothWheel:true
+    smoothWheel:true,
+    normalizeWheel: true,
+    infinite: false,
 });
 
-function raf(time){
+gsap.registerPlugin(ScrollTrigger);
 
-    lenis.raf(time);
+lenis.on('scroll', ScrollTrigger.update);
 
-    requestAnimationFrame(raf);
+gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+});
 
-}
+gsap.ticker.lagSmoothing(0);
 
-requestAnimationFrame(raf);
 // Success message auto hide
 
 const success = document.getElementById("success-message");
