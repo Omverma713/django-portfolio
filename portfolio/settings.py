@@ -26,8 +26,27 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = ["django-portfolio-i2t8.onrender.com","*"]
-CSRF_TRUSTED_ORIGINS = ["https://django-portfolio-i2t8.onrender.com"]
+# Add your EC2 public IP here once launched, e.g. "3.110.45.22"
+EC2_HOST = config("EC2_HOST", default="")
+
+ALLOWED_HOSTS = [
+    "django-portfolio-i2t8.onrender.com",
+    "omverma-dev.duckdns.org",
+    ".duckdns.org",
+    "localhost",
+    "127.0.0.1",
+    "*",
+]
+if EC2_HOST:
+    ALLOWED_HOSTS.append(EC2_HOST)
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://django-portfolio-i2t8.onrender.com",
+    "https://omverma-dev.duckdns.org",
+]
+if EC2_HOST:
+    CSRF_TRUSTED_ORIGINS.append(f"http://{EC2_HOST}")
+    CSRF_TRUSTED_ORIGINS.append(f"https://{EC2_HOST}")
 
 
 # Application definition
@@ -42,6 +61,7 @@ INSTALLED_APPS = [
     'main',
     'tailwind',
     'theme',
+    'ai_assistant',
 ]
 NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 TAILWIND_APP_NAME = "theme"

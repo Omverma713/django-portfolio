@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Om Verma | 3D Autumn Sunset Island (Bruno Simon Exact World)</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800;900&family=JetBrains+Mono:wght@600;800&family=Rubik:wght@800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #D96F52;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #FFFFFF;
+        }
+
+        #webgl-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            outline: none;
+            z-index: 1;
+        }
+
+        /* Bruno Simon Red UI Icons */
+        .bruno-icon-btn {
+            background-color: #BE123C;
+            border: 2px solid #E11D48;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+            transition: all 0.15s ease;
+        }
+        .bruno-icon-btn:hover {
+            background-color: #E11D48;
+            transform: scale(1.06);
+        }
+
+        .hud-pill {
+            background: rgba(43, 20, 30, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-btn {
+            transition: all 0.15s ease;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #F43F5E;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- WebGL Canvas -->
+    <canvas id="webgl-canvas"></canvas>
+
+    <!-- TOP HEADER OVERLAY -->
+    <header class="fixed top-0 left-0 right-0 z-30 flex items-center justify-between p-3.5 sm:p-5 pointer-events-none">
+        
+        <!-- Status / Identity -->
+        <div class="hud-pill px-4 py-2 rounded-2xl flex items-center gap-3 pointer-events-auto border-amber-500/30">
+            <div class="w-8 h-8 rounded-xl bg-rose-600 text-white font-black text-sm flex items-center justify-center font-mono shadow-md">
+                OV
+            </div>
+            <div>
+                <h1 class="font-black text-xs sm:text-sm tracking-tight leading-tight text-amber-200">OM VERMA</h1>
+                <p class="font-mono text-[10px] text-rose-300 font-bold">AUTUMN_SUNSET_CAMP.EXE</p>
+            </div>
+        </div>
+
+        <!-- ZONE NAVIGATOR BAR -->
+        <nav class="hidden md:flex items-center gap-2 hud-pill p-1.5 rounded-2xl pointer-events-auto">
+            <button onclick="driveToZone('start')" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 text-amber-200">
+                <span>📍</span> Village Square
+            </button>
+            <button onclick="driveToZone('furnace')" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 text-rose-300">
+                <span>🔥</span> Oven & River
+            </button>
+            <button onclick="driveToZone('skills')" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 text-emerald-300">
+                <span>⚡</span> Tech Stack
+            </button>
+            <button onclick="driveToZone('projects')" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 text-cyan-300">
+                <span>🏆</span> Projects
+            </button>
+            <button onclick="driveToZone('contact')" class="nav-btn px-3.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 text-amber-300">
+                <span>📬</span> Contact
+            </button>
+        </nav>
+
+        <!-- Right Action Buttons -->
+        <div class="flex items-center gap-2.5 pointer-events-auto">
+            <button onclick="toggleAudio()" id="soundBtn" class="bruno-icon-btn w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center text-white text-base" title="Toggle Sound">
+                <i class="fa-solid fa-volume-high" id="soundIcon"></i>
+            </button>
+            <button onclick="openOverviewModal()" class="bruno-icon-btn w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center text-white text-base" title="Portfolio Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- PROXIMITY DISCOVERY TOAST -->
+    <div id="discoveryToast" class="fixed top-20 left-1/2 -translate-x-1/2 z-30 hidden pointer-events-auto duration-300">
+        <div class="hud-pill px-6 py-3 rounded-2xl flex items-center gap-4 border-amber-500/50 shadow-2xl animate-bounce">
+            <span id="toastIcon" class="text-2xl">🏆</span>
+            <div>
+                <span id="toastSubtitle" class="font-mono text-[10px] font-bold text-amber-400 block uppercase">DISCOVERY DETECTED</span>
+                <h4 id="toastTitle" class="font-black text-sm sm:text-base text-white">Django Portfolio</h4>
+            </div>
+            <button id="toastActionBtn" class="px-3.5 py-1.5 bg-rose-600 hover:bg-rose-500 rounded-xl text-xs font-bold text-white shadow-md">
+                View ↗
+            </button>
+        </div>
+    </div>
+
+    <!-- BOTTOM CONTROLS & ZONE TABS -->
+    <footer class="fixed bottom-4 left-0 right-0 z-30 flex flex-col items-center gap-2.5 pointer-events-none px-4">
+        
+        <!-- Mobile Station Quick Tabs -->
+        <div class="md:hidden flex items-center gap-1.5 hud-pill p-1.5 rounded-2xl pointer-events-auto">
+            <button onclick="driveToZone('skills')" class="px-3 py-1 bg-white/10 rounded-xl text-xs font-bold text-emerald-300">
+                ⚡ Skills
+            </button>
+            <button onclick="driveToZone('projects')" class="px-3 py-1 bg-white/10 rounded-xl text-xs font-bold text-cyan-300">
+                🏆 Projects
+            </button>
+            <button onclick="driveToZone('contact')" class="px-3 py-1 bg-white/10 rounded-xl text-xs font-bold text-amber-300">
+                📬 Contact
+            </button>
+        </div>
+
+        <!-- Drive Tip -->
+        <div class="hud-pill px-5 py-2 rounded-2xl flex items-center gap-3 pointer-events-auto text-xs">
+            <div class="flex items-center gap-1.5 font-bold text-amber-100">
+                <span class="px-1.5 py-0.5 bg-white/10 rounded font-mono text-[11px] text-amber-300">W A S D</span>
+                <span class="hidden sm:inline">/</span>
+                <span class="px-1.5 py-0.5 bg-white/10 rounded font-mono text-[11px] text-amber-300 hidden sm:inline">ARROWS</span>
+                <span>or Scroll to Drive</span>
+            </div>
+            <div class="w-px h-3.5 bg-white/20"></div>
+            <button onclick="driveToZone('start')" class="text-rose-400 font-bold hover:underline">
+                Reset ↻
+            </button>
+        </div>
+    </footer>
+
+    <!-- MOBILE TOUCH DPAD -->
+    <div id="mobileDpad" class="fixed bottom-20 right-4 z-30 hidden flex-col items-center gap-1.5 pointer-events-auto">
+        <button onpointerdown="keys.w = true" onpointerup="keys.w = false" class="bruno-icon-btn w-12 h-12 rounded-xl flex items-center justify-center text-lg text-white">
+            <i class="fa-solid fa-arrow-up"></i>
+        </button>
+        <div class="flex gap-1.5">
+            <button onpointerdown="keys.a = true" onpointerup="keys.a = false" class="bruno-icon-btn w-12 h-12 rounded-xl flex items-center justify-center text-lg text-white">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <button onpointerdown="keys.s = true" onpointerup="keys.s = false" class="bruno-icon-btn w-12 h-12 rounded-xl flex items-center justify-center text-lg text-white">
+                <i class="fa-solid fa-arrow-down"></i>
+            </button>
+            <button onpointerdown="keys.d = true" onpointerup="keys.d = false" class="bruno-icon-btn w-12 h-12 rounded-xl flex items-center justify-center text-lg text-white">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- DETAIL MODAL -->
+    <div id="detailModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="hud-pill max-w-lg w-full p-6 sm:p-8 rounded-3xl border border-white/20">
+            <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
+                <div class="flex items-center gap-2.5">
+                    <span id="modalIcon" class="text-2xl">🏆</span>
+                    <div>
+                        <span id="modalBadge" class="font-mono text-[11px] font-bold text-amber-400 uppercase">DETAILS</span>
+                        <h3 id="modalTitle" class="font-black text-2xl text-white">Title</h3>
+                    </div>
+                </div>
+                <button onclick="closeDetailModal()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-rose-600 text-white flex items-center justify-center font-bold">✕</button>
+            </div>
+
+            <p id="modalDesc" class="text-slate-200 text-sm sm:text-base leading-relaxed mb-6 font-medium"></p>
+            <div id="modalTechTags" class="flex flex-wrap gap-2 mb-6"></div>
+
+            <div id="modalActions" class="flex gap-3">
+                <a id="modalLiveDemo" href="#" target="_blank" class="flex-1 py-3 bg-rose-600 hover:bg-rose-500 rounded-xl font-bold text-center text-white duration-150 flex items-center justify-center gap-2">
+                    <span>Live Demo</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                </a>
+                <a id="modalGithub" href="#" target="_blank" class="flex-1 py-3 bg-white/10 hover:bg-white/20 rounded-xl font-bold text-center text-white duration-150 flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-github text-base"></i>
+                    <span>GitHub Repo</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- OVERVIEW INDEX MODAL -->
+    <div id="overviewModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="hud-pill max-w-xl w-full p-6 sm:p-8 rounded-3xl border border-white/20 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-5">
+                <h2 class="font-black text-2xl text-amber-200">OM VERMA // INDEX</h2>
+                <button onclick="closeOverviewModal()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-rose-600 text-white flex items-center justify-center font-bold">✕</button>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <h4 class="font-mono text-xs font-bold text-rose-400 uppercase tracking-wider mb-3">★ FEATURED PROJECTS</h4>
+                    <div class="space-y-3">
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-between">
+                            <div>
+                                <h5 class="font-bold text-white">Full-Stack Portfolio</h5>
+                                <p class="text-xs text-slate-300">Django, Tailwind CSS, GSAP</p>
+                            </div>
+                            <a href="https://omverma-dev.duckdns.org/" target="_blank" class="px-3 py-1.5 bg-rose-600 rounded-lg text-xs font-bold text-white">Demo</a>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-between">
+                            <div>
+                                <h5 class="font-bold text-white">Modern Django Blog CMS</h5>
+                                <p class="text-xs text-slate-300">PostgreSQL, Markdown, Auth</p>
+                            </div>
+                            <a href="https://github.com/Omverma713/django-blog" target="_blank" class="px-3 py-1.5 bg-white/10 rounded-lg text-xs font-bold text-white">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-mono text-xs font-bold text-emerald-400 uppercase tracking-wider mb-3">⚡ CORE TECH STACK</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-lg text-xs font-bold border border-emerald-500/30">Python</span>
+                        <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-lg text-xs font-bold border border-emerald-500/30">Django & DRF</span>
+                        <span class="px-3 py-1 bg-cyan-500/20 text-cyan-300 rounded-lg text-xs font-bold border border-cyan-500/30">React.js</span>
+                        <span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-lg text-xs font-bold border border-indigo-500/30">PostgreSQL</span>
+                        <span class="px-3 py-1 bg-amber-500/20 text-amber-300 rounded-lg text-xs font-bold border border-amber-500/30">Tailwind CSS</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider mb-3">📬 CONTACT DIRECT</h4>
+                    <div class="p-4 bg-white/5 rounded-2xl border border-white/10 space-y-2 font-mono text-xs">
+                        <p class="flex justify-between">
+                            <span class="text-slate-400">EMAIL:</span>
+                            <a href="mailto:omverma.dev@gmail.com" class="text-amber-300 font-bold underline">omverma.dev@gmail.com</a>
+                        </p>
+                        <p class="flex justify-between">
+                            <span class="text-slate-400">GITHUB:</span>
+                            <a href="https://github.com/Omverma713" target="_blank" class="text-amber-300 font-bold underline">github.com/Omverma713</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ============================================== -->
+    <!-- THREE.JS EXACT AUTUMN SUNSET SCENE & PHYSICS   -->
+    <!-- ============================================== -->
+    <script>
+        // 1. SETUP CANVAS & SCENE
+        const canvas = document.getElementById('webgl-canvas');
+        const scene = new THREE.Scene();
+
+        // EXACT AUTUMN SUNSET SKY & FOG (Matching the user's screenshot)
+        const sunsetSkyColor = new THREE.Color('#D96F52'); // Warm sunset peach/terracotta
+        scene.background = sunsetSkyColor;
+        scene.fog = new THREE.FogExp2('#D96F52', 0.012);
+
+        // 2. CAMERA (Elevated 3/4 Isometric Perspective)
+        const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 900);
+        camera.position.set(0, 24, 28);
+
+        // 3. RENDERER
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, powerPreference: "high-performance" });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.15;
+
+        // 4. WARM GOLDEN SUNSET LIGHTING
+        // Ambient soft peach-purple glow
+        const ambientLight = new THREE.AmbientLight('#7C3A4B', 1.6);
+        scene.add(ambientLight);
+
+        // Direct low-angle golden sunset sunlight
+        const sunLight = new THREE.DirectionalLight('#FFA654', 1.8);
+        sunLight.position.set(45, 45, 35);
+        sunLight.castShadow = true;
+        sunLight.shadow.mapSize.width = 2048;
+        sunLight.shadow.mapSize.height = 2048;
+        sunLight.shadow.camera.near = 0.5;
+        sunLight.shadow.camera.far = 180;
+        const d = 65;
+        sunLight.shadow.camera.left = -d;
+        sunLight.shadow.camera.right = d;
+        sunLight.shadow.camera.top = d;
+        sunLight.shadow.camera.bottom = -d;
+        sunLight.shadow.bias = -0.0005;
+        scene.add(sunLight);
+
+        // Secondary soft violet/blue rim light from river side
+        const skyFill = new THREE.DirectionalLight('#4338CA', 0.55);
+        skyFill.position.set(-35, 25, -20);
+        scene.add(skyFill);
+
+        // 5. TERRAIN: WARM GOLDEN SAND & TURQUOISE RIVER
+        // Warm Peach-Amber Sand Base
+        const groundGeo = new THREE.PlaneGeometry(280, 280);
+        const groundMat = new THREE.MeshStandardMaterial({ 
+            color: '#F49B5A', // Warm golden sand from screenshot
+            roughness: 0.88,
+            metalness: 0.02
+        });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        // Curved Turquoise River with Shoreline Foam (Matching screenshot)
+        const riverGeo = new THREE.PlaneGeometry(32, 280);
+        const riverMat = new THREE.MeshStandardMaterial({ 
+            color: '#166E7F', // Deep turquoise teal
+            roughness: 0.15,
+            metalness: 0.75,
+            transparent: true,
+            opacity: 0.92
+        });
+        const river = new THREE.Mesh(riverGeo, riverMat);
+        river.rotation.x = -Math.PI / 2;
+        river.position.set(-24, 0.08, 0);
+        scene.add(river);
+
+        // White Foam Shoreline Ripple Strips along River bank
+        const foamMat = new THREE.MeshBasicMaterial({ color: '#FFFFFF', transparent: true, opacity: 0.65 });
+        for (let z = -120; z <= 120; z += 12) {
+            const foamR = new THREE.Mesh(new THREE.PlaneGeometry(1.2, 10), foamMat);
+            foamR.rotation.x = -Math.PI / 2;
+            foamR.position.set(-8.5 + (Math.sin(z) * 0.8), 0.12, z);
+            const foamL = foamR.clone();
+            foamL.position.x = -39.5 - (Math.sin(z) * 0.8);
+            scene.add(foamR, foamL);
+        }
+
+        // Tiled Plaza / Courtyard Pathway
+        const plazaGeo = new THREE.PlaneGeometry(48, 55);
+        const plazaMat = new THREE.MeshStandardMaterial({ color: '#E58A4A', roughness: 0.7 });
+        const plaza = new THREE.Mesh(plazaGeo, plazaMat);
+        plaza.rotation.x = -Math.PI / 2;
+        plaza.position.set(5, 0.1, 0);
+        plaza.receiveShadow = true;
+        scene.add(plaza);
+
+        // Scattered Sand Path Slabs / Tiles (From screenshot)
+        const slabMat = new THREE.MeshStandardMaterial({ color: '#FCE7D0', roughness: 0.8 });
+        const slabCoords = [
+            [-4, 8], [-2, 12], [1, 15], [3, 19], [-6, -4], [-5, -9], [-3, -15],
+            [12, 10], [15, 14], [18, 19], [6, -8], [8, -13], [11, -18]
+        ];
+        slabCoords.forEach(([x, z]) => {
+            const slab = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.08, 1.4), slabMat);
+            slab.position.set(x, 0.12, z);
+            slab.rotation.y = (x + z) * 0.2;
+            slab.receiveShadow = true;
+            scene.add(slab);
+        });
+
+        // 6. HEXAGONAL RIVER STEPPING STONES (Exact from screenshot!)
+        const stoneMat = new THREE.MeshStandardMaterial({ color: '#43455C', roughness: 0.65 }); // Dark slate hexagon stones
+        const hexStones = [
+            { x: -14, z: 2, r: 1.6, h: 1.8 },
+            { x: -12, z: 4.5, r: 1.4, h: 2.2 },
+            { x: -15, z: 6, r: 1.5, h: 1.6 },
+            { x: -10, z: 2, r: 1.3, h: 2.5 }, // Stone with lantern on top!
+            { x: -8, z: 4, r: 1.6, h: 2.0 },
+            { x: -11, z: 7.5, r: 1.4, h: 1.4 }
+        ];
+
+        hexStones.forEach(s => {
+            const hex = new THREE.Mesh(new THREE.CylinderGeometry(s.r, s.r, s.h, 6), stoneMat);
+            hex.position.set(s.x, s.h / 2, s.z);
+            hex.castShadow = true;
+            hex.receiveShadow = true;
+            scene.add(hex);
+        });
+
+        // Lantern on top of the Stepping Stone (From screenshot!)
+        function createWarmLantern(x, y, z) {
+            const lantern = new THREE.Group();
+            lantern.position.set(x, y, z);
+
+            const frame = new THREE.Mesh(new THREE.BoxGeometry(0.8, 1.1, 0.8), new THREE.MeshStandardMaterial({ color: '#2B1C16', roughness: 0.8 }));
+            frame.position.y = 0.55;
+
+            const glowCore = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.75, 0.55), new THREE.MeshBasicMaterial({ color: '#FFA500' }));
+            glowCore.position.y = 0.55;
+
+            const warmLight = new THREE.PointLight('#FFA000', 3.0, 18, 1.3);
+            warmLight.position.y = 0.6;
+            warmLight.castShadow = true;
+
+            lantern.add(frame, glowCore, warmLight);
+            scene.add(lantern);
+            return lantern;
+        }
+
+        // Stone lantern
+        createWarmLantern(-10, 2.5, 2);
+
+        // Street Lanterns
+        createWarmLantern(12, 0, -6);
+        createWarmLantern(28, 0, -22);
+        createWarmLantern(-46, 0, 8);
+        createWarmLantern(12, 0, 28);
+
+        // 7. WOODEN PARK BENCH BY THE RIVER (From screenshot!)
+        const benchGroup = new THREE.Group();
+        benchGroup.position.set(-6, 0.1, -1);
+        benchGroup.rotation.y = -Math.PI / 8;
+
+        const benchWood = new THREE.MeshStandardMaterial({ color: '#5C3826', roughness: 0.7 });
+        const benchLeg = new THREE.MeshStandardMaterial({ color: '#1E1B2E', roughness: 0.5 });
+
+        // Seat planks
+        for (let y of [0.8, 1.1, 1.4]) {
+            const plank = new THREE.Mesh(new THREE.BoxGeometry(3.6, 0.12, 0.5), benchWood);
+            plank.position.set(0, y, (y - 0.8) * 0.4);
+            plank.castShadow = true;
+            benchGroup.add(plank);
+        }
+        // Backrest planks
+        for (let y of [1.8, 2.2, 2.6]) {
+            const backPlank = new THREE.Mesh(new THREE.BoxGeometry(3.6, 0.3, 0.12), benchWood);
+            backPlank.position.set(0, y, 0.6);
+            backPlank.castShadow = true;
+            benchGroup.add(backPlank);
+        }
+        // Legs
+        const leg1 = new THREE.Mesh(new THREE.BoxGeometry(0.3, 1.5, 0.8), benchLeg);
+        leg1.position.set(-1.6, 0.75, 0.2);
+        const leg2 = leg1.clone();
+        leg2.position.x = 1.6;
+        benchGroup.add(leg1, leg2);
+        scene.add(benchGroup);
+
+        // 8. STONE BAKERY FURNACE / OVEN & BANNER (From screenshot!)
+        const furnaceGroup = new THREE.Group();
+        furnaceGroup.position.set(8, 0.1, -18);
+        furnaceGroup.rotation.y = -Math.PI / 12;
+
+        // Furnace stone base & dome
+        const ovenMat = new THREE.MeshStandardMaterial({ color: '#4B4254', roughness: 0.85 });
+        const ovenBase = new THREE.Mesh(new THREE.BoxGeometry(5.5, 2.2, 4.5), ovenMat);
+        ovenBase.position.y = 1.1;
+        ovenBase.castShadow = true;
+
+        const ovenDome = new THREE.Mesh(new THREE.CylinderGeometry(2.4, 2.7, 1.8, 16), ovenMat);
+        ovenDome.position.y = 2.6;
+        ovenDome.castShadow = true;
+
+        // Glowing fire opening
+        const fireOpening = new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.2, 0.4), new THREE.MeshBasicMaterial({ color: '#FF4500' }));
+        fireOpening.position.set(0, 1.0, 2.2);
+
+        const ovenFireLight = new THREE.PointLight('#FF5722', 2.8, 14, 1.4);
+        ovenFireLight.position.set(0, 1.2, 2.5);
+
+        // Hanging Crest Banner on wooden pole (From screenshot!)
+        const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 5.5, 8), benchWood);
+        pole.position.set(3.4, 2.75, 1.5);
+        const banner = new THREE.Mesh(new THREE.BoxGeometry(1.6, 2.8, 0.1), new THREE.MeshStandardMaterial({ color: '#B91C1C' }));
+        banner.position.set(3.4, 3.2, 1.5);
+        banner.castShadow = true;
+
+        furnaceGroup.add(ovenBase, ovenDome, fireOpening, ovenFireLight, pole, banner);
+        scene.add(furnaceGroup);
+
+        // 9. WOODEN BRIDGE ACROSS RIVER (Left side of screenshot)
+        const bridgeGroup = new THREE.Group();
+        bridgeGroup.position.set(-24, 0.2, 18);
+
+        for (let i = -7; i <= 7; i += 1.1) {
+            const plank = new THREE.Mesh(new THREE.BoxGeometry(8, 0.35, 0.95), benchWood);
+            plank.position.set(0, 1.4, i);
+            plank.castShadow = true;
+            bridgeGroup.add(plank);
+        }
+        const bridgeRailL = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.6, 16.5), benchWood);
+        bridgeRailL.position.set(-3.8, 2.4, 0);
+        const bridgeRailR = bridgeRailL.clone();
+        bridgeRailR.position.x = 3.8;
+        bridgeGroup.add(bridgeRailL, bridgeRailR);
+        scene.add(bridgeGroup);
+
+        // 9B. WOODEN NOTICE BOARD / MAP BILLBOARD (Exact from Image 1)
+        const noticeGroup = new THREE.Group();
+        noticeGroup.position.set(6, 0.1, -4);
+        noticeGroup.rotation.y = -Math.PI / 6;
+
+        // Wooden posts
+        const boardPost1 = new THREE.Mesh(new THREE.BoxGeometry(0.4, 4.5, 0.4), benchWood);
+        boardPost1.position.set(-2.2, 2.25, 0);
+        const boardPost2 = boardPost1.clone();
+        boardPost2.position.x = 2.2;
+        
+        // Board backing
+        const boardBack = new THREE.Mesh(new THREE.BoxGeometry(4.8, 3.0, 0.3), new THREE.MeshStandardMaterial({ color: '#3A261A', roughness: 0.8 }));
+        boardBack.position.set(0, 2.8, 0);
+
+        // Map sheet / papers with diamond waypoint icon
+        const mapCanvas = document.createElement('canvas');
+        mapCanvas.width = 256; mapCanvas.height = 160;
+        const mapCtx = mapCanvas.getContext('2d');
+        mapCtx.fillStyle = '#1E293B'; mapCtx.fillRect(0, 0, 256, 160);
+        mapCtx.strokeStyle = '#38BDF8'; mapCtx.lineWidth = 3;
+        // Draw grid lines
+        mapCtx.beginPath();
+        for (let x = 20; x < 256; x += 40) { mapCtx.moveTo(x, 10); mapCtx.lineTo(x, 150); }
+        for (let y = 20; y < 160; y += 40) { mapCtx.moveTo(10, y); mapCtx.lineTo(246, y); }
+        mapCtx.stroke();
+        // White diamond waypoint
+        mapCtx.fillStyle = '#FFFFFF';
+        mapCtx.beginPath();
+        mapCtx.moveTo(128, 65); mapCtx.lineTo(143, 80); mapCtx.lineTo(128, 95); mapCtx.lineTo(113, 80);
+        mapCtx.closePath();
+        mapCtx.fill();
+        mapCtx.strokeStyle = '#000000'; mapCtx.lineWidth = 2; mapCtx.stroke();
+        const mapTexture = new THREE.CanvasTexture(mapCanvas);
+
+        const mapSheet = new THREE.Mesh(new THREE.PlaneGeometry(4.2, 2.4), new THREE.MeshBasicMaterial({ map: mapTexture }));
+        mapSheet.position.set(0, 2.8, 0.18);
+
+        // Little shingled tiled roof on top of board
+        const boardRoof = new THREE.Mesh(new THREE.BoxGeometry(5.4, 0.4, 1.4), new THREE.MeshStandardMaterial({ color: '#5C1D24', roughness: 0.7 }));
+        boardRoof.position.set(0, 4.4, 0);
+        boardRoof.rotation.x = 0.2;
+
+        noticeGroup.add(boardPost1, boardPost2, boardBack, mapSheet, boardRoof);
+        scene.add(noticeGroup);
+
+        // 9C. STACKED WOODEN CRATES (From Image 1 near letters)
+        const crateMat = new THREE.MeshStandardMaterial({ color: '#854D27', roughness: 0.65 });
+        const crateBracketMat = new THREE.MeshStandardMaterial({ color: '#2B4C7E', roughness: 0.5 });
+        function createCrate(x, y, z, rot = 0) {
+            const crate = new THREE.Group();
+            crate.position.set(x, y, z);
+            crate.rotation.y = rot;
+            const box = new THREE.Mesh(new THREE.BoxGeometry(1.8, 1.8, 1.8), crateMat);
+            box.castShadow = true;
+            box.receiveShadow = true;
+            // Metal edge straps
+            const strap = new THREE.Mesh(new THREE.BoxGeometry(1.85, 1.85, 0.2), crateBracketMat);
+            crate.add(box, strap);
+            scene.add(crate);
+        }
+        createCrate(7.5, 0.9, 8, 0.2);
+        createCrate(9.5, 0.9, 7.5, -0.3);
+        createCrate(8.2, 2.7, 7.8, 0.4);
+
+        // 9D. BLUE STREET LAMPPOST (From Image 1 next to Buggy car)
+        const lamppostGroup = new THREE.Group();
+        lamppostGroup.position.set(-5, 0.1, 2);
+        const lampPostMat = new THREE.MeshStandardMaterial({ color: '#254E70', roughness: 0.6 });
+        const lampPole = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.35, 4.2, 8), lampPostMat);
+        lampPole.position.y = 2.1;
+        lampPole.castShadow = true;
+        const lampHead = new THREE.Mesh(new THREE.BoxGeometry(1.0, 1.2, 1.0), lampPostMat);
+        lampHead.position.y = 4.4;
+        const lampGlass = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.8, 0.7), new THREE.MeshBasicMaterial({ color: '#FFA500' }));
+        lampGlass.position.y = 4.4;
+        const lampPointLight = new THREE.PointLight('#FFA000', 3.2, 16, 1.2);
+        lampPointLight.position.y = 4.4;
+        lampPointLight.castShadow = true;
+        lamppostGroup.add(lampPole, lampHead, lampGlass, lampPointLight);
+        scene.add(lamppostGroup);
+
+        // 9E. CAFE / RESTAURANT PICNIC TABLE WITH KETCHUP & MUSTARD (From Image 3 bottom left)
+        const cafeGroup = new THREE.Group();
+        cafeGroup.position.set(-6, 0.1, 25);
+        // Table top
+        const tableTop = new THREE.Mesh(new THREE.BoxGeometry(3.5, 0.2, 2.5), new THREE.MeshStandardMaterial({ color: '#E2E8F0', roughness: 0.3 }));
+        tableTop.position.y = 1.4;
+        tableTop.castShadow = true;
+        // Table legs
+        const tableLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 1.4, 8), benchWood);
+        tableLeg.position.set(-1.4, 0.7, -1.0);
+        const tLeg2 = tableLeg.clone(); tLeg2.position.set(1.4, 0.7, -1.0);
+        const tLeg3 = tableLeg.clone(); tLeg3.position.set(-1.4, 0.7, 1.0);
+        const tLeg4 = tableLeg.clone(); tLeg4.position.set(1.4, 0.7, 1.0);
+        // Red / White striped border
+        const tableBorder = new THREE.Mesh(new THREE.BoxGeometry(3.6, 0.12, 2.6), new THREE.MeshStandardMaterial({ color: '#DC2626' }));
+        tableBorder.position.y = 1.34;
+        // Yellow Mustard Bottle
+        const mustard = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 0.65, 8), new THREE.MeshStandardMaterial({ color: '#EAB308' }));
+        mustard.position.set(0.3, 1.82, 0.2);
+        // Red Ketchup Bottle
+        const ketchup = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 0.65, 8), new THREE.MeshStandardMaterial({ color: '#DC2626' }));
+        ketchup.position.set(0.65, 1.82, 0.2);
+        cafeGroup.add(tableTop, tableBorder, tableLeg, tLeg2, tLeg3, tLeg4, mustard, ketchup);
+        scene.add(cafeGroup);
+
+        // 10. SCENERY: AUTUMN TREES (Fiery Red, Golden Orange, Pinkish-Cherry)
+        function createAutumnTree(x, z, foliageColor = '#D84315', scale = 1) {
+            const tree = new THREE.Group();
+            
+            // Trunk
+            const trunkMat = new THREE.MeshStandardMaterial({ color: '#EFEBE9', roughness: 0.85 }); // Birch white trunk
+            const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.45, 3.6, 8), trunkMat);
+            trunk.position.y = 1.8;
+            trunk.castShadow = true;
+            tree.add(trunk);
+
+            // Fluffy Autumn Canopy with multiple spheres
+            const folMat = new THREE.MeshStandardMaterial({ color: foliageColor, roughness: 0.8 });
+            
+            const fol1 = new THREE.Mesh(new THREE.DodecahedronGeometry(2.4, 1), folMat);
+            fol1.position.set(0, 4.4, 0);
+            fol1.castShadow = true;
+            
+            const fol2 = new THREE.Mesh(new THREE.DodecahedronGeometry(1.8, 1), folMat);
+            fol2.position.set(1.2, 4.8, 0.6);
+            fol2.castShadow = true;
+
+            const fol3 = new THREE.Mesh(new THREE.DodecahedronGeometry(1.6, 1), folMat);
+            fol3.position.set(-0.9, 4.2, -0.8);
+            fol3.castShadow = true;
+
+            tree.add(fol1, fol2, fol3);
+            tree.position.set(x, 0, z);
+            tree.scale.set(scale, scale, scale);
+            scene.add(tree);
+        }
+
+        // Autumn trees from screenshot
+        createAutumnTree(-3, -8, '#D84315', 1.1);   // Fiery red tree near bench
+        createAutumnTree(2, -12, '#F59E0B', 1.0);   // Golden yellow tree
+        createAutumnTree(14, -14, '#C2410C', 1.25); // Deep amber tree
+        createAutumnTree(-8, -22, '#E11D48', 1.0);  // Rose-red autumn tree
+        createAutumnTree(24, 2, '#D84315', 1.2);    // Orange tree
+        createAutumnTree(-38, 28, '#F59E0B', 1.15); // Yellow tree across bridge
+
+        // Tufted Grass Clumps around trees (Spiky olive-green grass blades)
+        const grassMat = new THREE.MeshStandardMaterial({ color: '#7E9135', roughness: 0.9 });
+        for (let i = 0; i < 35; i++) {
+            const tuft = new THREE.Mesh(new THREE.ConeGeometry(0.6 + Math.random() * 0.4, 1.2, 5), grassMat);
+            tuft.position.set(
+                (Math.random() - 0.5) * 55,
+                0.6,
+                (Math.random() - 0.5) * 55
+            );
+            tuft.castShadow = true;
+            scene.add(tuft);
+        }
+
+        // Scattered Fallen Autumn Leaf Flakes on Ground & River
+        const leafFlakeMat = new THREE.MeshBasicMaterial({ color: '#E65100' });
+        const leafFlakeYellow = new THREE.MeshBasicMaterial({ color: '#FBC02D' });
+        for (let i = 0; i < 70; i++) {
+            const mat = Math.random() > 0.5 ? leafFlakeMat : leafFlakeYellow;
+            const flake = new THREE.Mesh(new THREE.PlaneGeometry(0.4, 0.4), mat);
+            flake.rotation.x = -Math.PI / 2;
+            flake.rotation.z = Math.random() * Math.PI;
+            flake.position.set(
+                (Math.random() - 0.5) * 60,
+                0.12,
+                (Math.random() - 0.5) * 60
+            );
+            scene.add(flake);
+        }
+
+        // 11. GIANT 3D BEVELED LETTERS ON GROUND: "OM VERMA"
+        const lettersGroup = new THREE.Group();
+        const letterMat = new THREE.MeshStandardMaterial({ color: '#5B76F7', roughness: 0.35, metalness: 0.15 });
+
+        function buildLetterMesh(char) {
+            const group = new THREE.Group();
+            const w = 0.7;
+            const h = 3.6;
+            const d = 1.5;
+
+            if (char === 'O') {
+                const top = new THREE.Mesh(new THREE.BoxGeometry(2.4, w, d), letterMat);
+                top.position.set(0, h - w/2, 0);
+                const bot = top.clone();
+                bot.position.y = w/2;
+                const left = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), letterMat);
+                left.position.set(-1.2 + w/2, h/2, 0);
+                const right = left.clone();
+                right.position.x = 1.2 - w/2;
+                group.add(top, bot, left, right);
+            } else if (char === 'M') {
+                const left = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), letterMat);
+                left.position.set(-1.4, h/2, 0);
+                const right = left.clone();
+                right.position.x = 1.4;
+                const midL = new THREE.Mesh(new THREE.BoxGeometry(w, h * 0.7, d), letterMat);
+                midL.position.set(-0.6, h * 0.6, 0);
+                midL.rotation.z = -0.35;
+                const midR = midL.clone();
+                midR.position.x = 0.6;
+                midR.rotation.z = 0.35;
+                group.add(left, right, midL, midR);
+            } else if (char === 'V') {
+                const left = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), letterMat);
+                left.position.set(-0.7, h/2, 0);
+                left.rotation.z = -0.22;
+                const right = left.clone();
+                right.position.x = 0.7;
+                right.rotation.z = 0.22;
+                group.add(left, right);
+            } else if (char === 'E') {
+                const back = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), letterMat);
+                back.position.set(-1.0, h/2, 0);
+                const top = new THREE.Mesh(new THREE.BoxGeometry(2.0, w, d), letterMat);
+                top.position.set(0, h - w/2, 0);
+                const mid = new THREE.Mesh(new THREE.BoxGeometry(1.6, w, d), letterMat);
+                mid.position.set(-0.2, h/2, 0);
+                const bot = top.clone();
+                bot.position.y = w/2;
+                group.add(back, top, mid, bot);
+            } else if (char === 'R') {
+                const back = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), letterMat);
+                back.position.set(-1.0, h/2, 0);
+                const top = new THREE.Mesh(new THREE.BoxGeometry(2.0, w, d), letterMat);
+                top.position.set(0, h - w/2, 0);
+                const mid = new THREE.Mesh(new THREE.BoxGeometry(2.0, w, d), letterMat);
+                mid.position.set(0, h * 0.55, 0);
+                const loopR = new THREE.Mesh(new THREE.BoxGeometry(w, h * 0.45, d), letterMat);
+                loopR.position.set(1.0 - w/2, h * 0.75, 0);
+                const leg = new THREE.Mesh(new THREE.BoxGeometry(w, h * 0.55, d), letterMat);
+                leg.position.set(0.6, h * 0.25, 0);
+                leg.rotation.z = -0.38;
+                group.add(back, top, mid, loopR, leg);
+            } else if (char === 'A') {
+                const left = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), letterMat);
+                left.position.set(-0.8, h/2, 0);
+                left.rotation.z = -0.22;
+                const right = left.clone();
+                right.position.x = 0.8;
+                right.rotation.z = 0.22;
+                const bar = new THREE.Mesh(new THREE.BoxGeometry(1.5, w, d), letterMat);
+                bar.position.set(0, h * 0.4, 0);
+                group.add(left, right, bar);
+            }
+
+            group.traverse(child => {
+                if (child.isMesh) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                }
+            });
+            return group;
+        }
+
+        let curX = -13;
+        for (let char of "OM VERMA") {
+            if (char === ' ') {
+                curX += 2.0;
+                continue;
+            }
+            const lMesh = buildLetterMesh(char);
+            lMesh.position.set(curX, 0.05, 12);
+            lMesh.rotation.x = -Math.PI / 18;
+            lettersGroup.add(lMesh);
+            curX += 3.2;
+        }
+        scene.add(lettersGroup);
+
+        // Helper: Canvas Texture for Billboards
+        function createTextTexture(text, bgColor = '#10B981', textColor = '#FFFFFF') {
+            const c = document.createElement('canvas');
+            c.width = 512;
+            c.height = 128;
+            const ctx = c.getContext('2d');
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(0, 0, 512, 128);
+            ctx.fillStyle = textColor;
+            ctx.font = 'bold 44px "Plus Jakarta Sans", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, 256, 64);
+            return new THREE.CanvasTexture(c);
+        }
+
+        // 12. TECH STACK ZONE (North-East of courtyard)
+        const techZone = new THREE.Group();
+        techZone.position.set(22, 0, -25);
+
+        const techSign = new THREE.Mesh(new THREE.BoxGeometry(10, 2.2, 0.4), new THREE.MeshStandardMaterial({ color: '#059669' }));
+        techSign.position.set(0, 4.5, 0);
+        techSign.material.map = createTextTexture("⚡ TECH STACK ⚡", '#059669');
+        const techSignPost = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 4.5, 8), benchWood);
+        techSignPost.position.y = 2.25;
+        techZone.add(techSign, techSignPost);
+
+        const techPillars = [
+            { name: "PYTHON", color: "#3B82F6", x: -6, z: 2 },
+            { name: "DJANGO", color: "#10B981", x: -1, z: 2 },
+            { name: "REACT.JS", color: "#06B6D4", x: 4, z: 2 },
+            { name: "POSTGRES", color: "#6366F1", x: -4, z: -3 },
+            { name: "TAILWIND", color: "#38BDF8", x: 2, z: -3 }
+        ];
+
+        const skillCubes = [];
+        techPillars.forEach(sk => {
+            const ped = new THREE.Mesh(new THREE.CylinderGeometry(1.4, 1.6, 1.0, 16), stoneMat);
+            ped.position.set(sk.x, 0.5, sk.z);
+            ped.receiveShadow = true;
+
+            const cube = new THREE.Mesh(new THREE.BoxGeometry(2.0, 2.0, 2.0), new THREE.MeshStandardMaterial({ color: sk.color, roughness: 0.3 }));
+            cube.position.set(sk.x, 2.2, sk.z);
+            cube.castShadow = true;
+            cube.material.map = createTextTexture(sk.name, sk.color);
+
+            techZone.add(ped, cube);
+            skillCubes.push(cube);
+        });
+        scene.add(techZone);
+
+        // 13. PROJECTS ZONE (Across Bridge on Left at X: -50)
+        const projectsZone = new THREE.Group();
+        projectsZone.position.set(-50, 0, 18);
+
+        const projectData = [
+            {
+                title: "Django Portfolio",
+                desc: "Full-stack portfolio with GSAP animations, Tailwind CSS, Lenis, and contact form handling.",
+                tags: ["Django", "Tailwind", "GSAP", "Python"],
+                live: "https://omverma-dev.duckdns.org/",
+                github: "https://github.com/Omverma713/django-portfolio",
+                x: 0, z: -10, color: "#8B5CF6"
+            },
+            {
+                title: "Django Blog CMS",
+                desc: "Modern content platform with user authentication, markdown editor, comments, and PostgreSQL database.",
+                tags: ["Django", "PostgreSQL", "Markdown", "Tailwind"],
+                live: "https://github.com/Omverma713/django-blog",
+                github: "https://github.com/Omverma713/django-blog",
+                x: 0, z: 8, color: "#06B6D4"
+            },
+            {
+                title: "RESTful API Engine",
+                desc: "Scalable backend API service with JWT authentication, throttling, Swagger UI, and automated unit testing.",
+                tags: ["Python", "DRF", "JWT", "Docker"],
+                live: "https://github.com/Omverma713",
+                github: "https://github.com/Omverma713",
+                x: 0, z: 26, color: "#F59E0B"
+            }
+        ];
+
+        const projectTriggers = [];
+        projectData.forEach(proj => {
+            const pGroup = new THREE.Group();
+            pGroup.position.set(proj.x, 0, proj.z);
+
+            const screenFrame = new THREE.Mesh(new THREE.BoxGeometry(0.8, 7.5, 11), new THREE.MeshStandardMaterial({ color: '#090710', roughness: 0.2 }));
+            screenFrame.position.y = 5.2;
+            screenFrame.castShadow = true;
+
+            const display = new THREE.Mesh(new THREE.BoxGeometry(0.9, 6.5, 10), new THREE.MeshStandardMaterial({ color: proj.color, roughness: 0.3 }));
+            display.position.y = 5.2;
+            display.material.map = createTextTexture(`🏆 ${proj.title}`, proj.color);
+
+            pGroup.add(screenFrame, display);
+            projectsZone.add(pGroup);
+
+            projectTriggers.push({
+                worldPos: new THREE.Vector3(-50 + proj.x, 0, 18 + proj.z),
+                data: proj
+            });
+        });
+        scene.add(projectsZone);
+
+        // 14. CONTACT STATION & POST BOOTH (Z: 36, X: 12)
+        const contactZone = new THREE.Group();
+        contactZone.position.set(12, 0, 36);
+
+        const booth = new THREE.Mesh(new THREE.BoxGeometry(4, 7, 4), new THREE.MeshStandardMaterial({ color: '#BE123C', roughness: 0.4 }));
+        booth.position.y = 3.5;
+        booth.castShadow = true;
+
+        const contactSign = new THREE.Mesh(new THREE.BoxGeometry(8, 2, 0.5), new THREE.MeshStandardMaterial({ color: '#F59E0B' }));
+        contactSign.position.set(0, 7.8, 0);
+        contactSign.material.map = createTextTexture("📬 CONTACT OM 📬", '#D97706');
+
+        contactZone.add(booth, contactSign);
+        scene.add(contactZone);
+
+        // 15. THE MONSTER BUGGY / CAR
+        const carGroup = new THREE.Group();
+        carGroup.position.set(-1, 0, 1);
+
+        const carBody = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1.2, 3.8), new THREE.MeshStandardMaterial({ color: '#1E1B2E', roughness: 0.4, metalness: 0.3 }));
+        carBody.position.y = 1.1;
+        carBody.castShadow = true;
+        carGroup.add(carBody);
+
+        const cabin = new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.9, 2.2), new THREE.MeshStandardMaterial({ color: '#110E1C', roughness: 0.6 }));
+        cabin.position.set(0, 1.9, -0.2);
+        cabin.castShadow = true;
+        carGroup.add(cabin);
+
+        // Amber Headlights
+        const amberLightMat = new THREE.MeshBasicMaterial({ color: '#FFA500' });
+        const lightBar = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.25, 0.15), amberLightMat);
+        lightBar.position.set(0, 1.0, 1.92);
+        carGroup.add(lightBar);
+
+        const carSpot = new THREE.SpotLight(0xFFA500, 2.8, 28, Math.PI / 6, 0.5);
+        carSpot.position.set(0, 1.0, 1.9);
+        const carSpotTarget = new THREE.Object3D();
+        carSpotTarget.position.set(0, 0, 15);
+        carGroup.add(carSpot, carSpotTarget);
+        carSpot.target = carSpotTarget;
+
+        // Wheels
+        const wheelGeo = new THREE.CylinderGeometry(0.65, 0.65, 0.55, 16);
+        wheelGeo.rotateZ(Math.PI / 2);
+        const wheels = [];
+        [[-1.35, 0.65, 1.2], [1.35, 0.65, 1.2], [-1.35, 0.65, -1.2], [1.35, 0.65, -1.2]].forEach(pos => {
+            const w = new THREE.Mesh(wheelGeo, new THREE.MeshStandardMaterial({ color: '#090710', roughness: 0.9 }));
+            w.position.set(...pos);
+            w.castShadow = true;
+            carGroup.add(w);
+            wheels.push(w);
+        });
+
+        // Floating Tag
+        const canvasTag = document.createElement('canvas');
+        canvasTag.width = 256; canvasTag.height = 64;
+        const ctxTag = canvasTag.getContext('2d');
+        ctxTag.fillStyle = 'rgba(25, 18, 46, 0.85)';
+        ctxTag.roundRect(10, 10, 236, 44, 12);
+        ctxTag.fill();
+        ctxTag.strokeStyle = '#F59E0B'; ctxTag.lineWidth = 3;
+        ctxTag.roundRect(10, 10, 236, 44, 12);
+        ctxTag.stroke();
+        ctxTag.fillStyle = '#FFFFFF';
+        ctxTag.font = 'bold 22px "Plus Jakarta Sans", sans-serif';
+        ctxTag.textAlign = 'center';
+        ctxTag.fillText('OM VERMA 🇮🇳', 128, 40);
+
+        const tagTex = new THREE.CanvasTexture(canvasTag);
+        const tagSprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: tagTex, transparent: true }));
+        tagSprite.position.set(0, 3.8, 0);
+        tagSprite.scale.set(4, 1, 1);
+        carGroup.add(tagSprite);
+
+        scene.add(carGroup);
+
+        // 16. DRIVING & SCROLL PHYSICS
+        let carPos = new THREE.Vector3(-1, 0, 1);
+        let carRot = Math.PI / 4;
+        let carSpeed = 0;
+        let targetCarPos = null;
+
+        const keys = { w: false, s: false, a: false, d: false };
+
+        window.addEventListener('keydown', (e) => {
+            const key = e.key.toLowerCase();
+            if (key === 'w' || key === 'arrowup') keys.w = true;
+            if (key === 's' || key === 'arrowdown') keys.s = true;
+            if (key === 'a' || key === 'arrowleft') keys.a = true;
+            if (key === 'd' || key === 'arrowright') keys.d = true;
+            targetCarPos = null;
+        });
+
+        window.addEventListener('keyup', (e) => {
+            const key = e.key.toLowerCase();
+            if (key === 'w' || key === 'arrowup') keys.w = false;
+            if (key === 's' || key === 'arrowdown') keys.s = false;
+            if (key === 'a' || key === 'arrowleft') keys.a = false;
+            if (key === 'd' || key === 'arrowright') keys.d = false;
+        });
+
+        window.addEventListener('wheel', (e) => {
+            targetCarPos = null;
+            if (e.deltaY > 0) carSpeed = Math.min(carSpeed + 0.35, 0.85);
+            else carSpeed = Math.max(carSpeed - 0.3, -0.5);
+        }, { passive: true });
+
+        // Touch Drag
+        let touchX = 0, touchY = 0;
+        window.addEventListener('touchstart', (e) => {
+            touchX = e.touches[0].clientX; touchY = e.touches[0].clientY;
+        }, { passive: true });
+        window.addEventListener('touchmove', (e) => {
+            targetCarPos = null;
+            const dx = e.touches[0].clientX - touchX;
+            const dy = e.touches[0].clientY - touchY;
+            touchX = e.touches[0].clientX; touchY = e.touches[0].clientY;
+            if (Math.abs(dy) > Math.abs(dx)) carSpeed += dy < 0 ? 0.08 : -0.06;
+            else carRot -= dx * 0.015;
+        }, { passive: true });
+
+        // Teleport / Drive to Zone
+        function driveToZone(zoneName) {
+            closeDetailModal();
+            closeOverviewModal();
+            if (zoneName === 'start') {
+                targetCarPos = new THREE.Vector3(-1, 0, 1);
+            } else if (zoneName === 'furnace') {
+                targetCarPos = new THREE.Vector3(5, 0, -12);
+            } else if (zoneName === 'skills') {
+                targetCarPos = new THREE.Vector3(20, 0, -18);
+            } else if (zoneName === 'projects') {
+                targetCarPos = new THREE.Vector3(-42, 0, 18);
+            } else if (zoneName === 'contact') {
+                targetCarPos = new THREE.Vector3(12, 0, 28);
+            }
+        }
+
+        // Proximity Detection
+        function checkNearbyObjects() {
+            const toast = document.getElementById('discoveryToast');
+            let found = null;
+
+            for (let pt of projectTriggers) {
+                if (carPos.distanceTo(pt.worldPos) < 14) {
+                    found = { type: 'project', data: pt.data };
+                    break;
+                }
+            }
+
+            if (!found && carPos.distanceTo(new THREE.Vector3(22, 0, -25)) < 16) {
+                found = {
+                    type: 'skills',
+                    data: {
+                        title: "Full-Stack Tech Stack",
+                        desc: "Core backend & frontend arsenal: Python, Django, React, PostgreSQL, Tailwind CSS, REST APIs.",
+                        tags: ["Python", "Django", "React", "PostgreSQL", "Tailwind"]
+                    }
+                };
+            }
+
+            if (!found && carPos.distanceTo(new THREE.Vector3(12, 0, 36)) < 15) {
+                found = {
+                    type: 'contact',
+                    data: {
+                        title: "Get in Touch with Om",
+                        desc: "Reach out directly via email: omverma.dev@gmail.com or on GitHub for collaborations & roles.",
+                        tags: ["omverma.dev@gmail.com", "Open to Work", "Remote / Full-time"]
+                    }
+                };
+            }
+
+            if (found) {
+                toast.classList.remove('hidden');
+                document.getElementById('toastTitle').innerText = found.data.title;
+                document.getElementById('toastSubtitle').innerText = found.type.toUpperCase() + ' DISCOVERED';
+                document.getElementById('toastIcon').innerText = found.type === 'project' ? '🏆' : (found.type === 'skills' ? '⚡' : '📬');
+                document.getElementById('toastActionBtn').onclick = () => openDetailModal(found);
+            } else {
+                toast.classList.add('hidden');
+            }
+        }
+
+        function openDetailModal(found) {
+            const d = found.data;
+            document.getElementById('modalIcon').innerText = found.type === 'project' ? '🏆' : (found.type === 'skills' ? '⚡' : '📬');
+            document.getElementById('modalBadge').innerText = found.type.toUpperCase() + ' DETAILS';
+            document.getElementById('modalTitle').innerText = d.title;
+            document.getElementById('modalDesc').innerText = d.desc;
+
+            const tagsCont = document.getElementById('modalTechTags');
+            tagsCont.innerHTML = '';
+            (d.tags || []).forEach(t => {
+                const sp = document.createElement('span');
+                sp.className = 'px-3 py-1 bg-white/10 rounded-lg text-xs font-bold text-slate-200 border border-white/10';
+                sp.innerText = t;
+                tagsCont.appendChild(sp);
+            });
+
+            const actions = document.getElementById('modalActions');
+            if (found.type === 'project') {
+                actions.classList.remove('hidden');
+                document.getElementById('modalLiveDemo').href = d.live;
+                document.getElementById('modalGithub').href = d.github;
+            } else if (found.type === 'contact') {
+                actions.classList.remove('hidden');
+                document.getElementById('modalLiveDemo').href = "mailto:omverma.dev@gmail.com";
+                document.getElementById('modalLiveDemo').innerText = "Send Email ✉";
+                document.getElementById('modalGithub').href = "https://github.com/Omverma713";
+            } else {
+                actions.classList.add('hidden');
+            }
+
+            document.getElementById('detailModal').classList.remove('hidden');
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detailModal').classList.add('hidden');
+        }
+        function openOverviewModal() {
+            document.getElementById('overviewModal').classList.remove('hidden');
+        }
+        function closeOverviewModal() {
+            document.getElementById('overviewModal').classList.add('hidden');
+        }
+
+        let soundEnabled = true;
+        function toggleAudio() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('soundIcon').className = soundEnabled ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
+        }
+
+        // 17. ANIMATION LOOP (Smooth 60FPS)
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (targetCarPos) {
+                const diff = targetCarPos.clone().sub(carPos);
+                if (diff.length() > 0.8) {
+                    carRot = Math.atan2(diff.x, diff.z);
+                    carPos.lerp(targetCarPos, 0.05);
+                    carSpeed = 0.4;
+                } else {
+                    targetCarPos = null;
+                    carSpeed = 0;
+                }
+            } else {
+                if (keys.w) carSpeed = Math.min(carSpeed + 0.035, 0.75);
+                else if (keys.s) carSpeed = Math.max(carSpeed - 0.03, -0.4);
+                else carSpeed *= 0.94;
+
+                if (keys.a) carRot += 0.045 * (carSpeed >= 0 ? 1 : -1);
+                if (keys.d) carRot -= 0.045 * (carSpeed >= 0 ? 1 : -1);
+
+                carPos.x += Math.sin(carRot) * carSpeed;
+                carPos.z += Math.cos(carRot) * carSpeed;
+            }
+
+            carGroup.position.copy(carPos);
+            carGroup.rotation.y = carRot;
+            wheels.forEach(w => w.rotation.x += carSpeed * 1.8);
+
+            // Floating skill cubes animation
+            skillCubes.forEach((mesh, i) => {
+                mesh.rotation.y += 0.015;
+                mesh.position.y = 2.2 + Math.sin(performance.now() * 0.003 + i) * 0.25;
+            });
+
+            // Camera smoothly follows car
+            const targetCamPos = new THREE.Vector3(carPos.x, carPos.y + 20, carPos.z + 24);
+            camera.position.lerp(targetCamPos, 0.06);
+            camera.lookAt(carPos.x, carPos.y + 1, carPos.z);
+
+            checkNearbyObjects();
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        if ('ontouchstart' in window) {
+            document.getElementById('mobileDpad').classList.remove('hidden');
+            document.getElementById('mobileDpad').classList.add('flex');
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

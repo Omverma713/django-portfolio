@@ -447,4 +447,12 @@ def live_demo_soon(request):
 def github_soon(request):
     return render(request, "main/github_soon.html")
 
+
+def revamp_preview(request):
+    return render(request, "main/revamp_template.html")
+
+
+def game_world(request):
+    return render(request, "main/game_world.html")
+
 

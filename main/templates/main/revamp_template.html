@@ -1,0 +1,1111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Om Verma | Soothing Light Polymorphic Portfolio</title>
+    <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        soothe: {
+                            base: '#F4F6F4',
+                            card: 'rgba(255, 255, 255, 0.72)',
+                            dark: '#1A2421',
+                            muted: '#52665F',
+                            accent: '#059669',
+                            subaccent: '#D97706',
+                        }
+                    },
+                    animation: {
+                        'float-slow': 'float 7s ease-in-out infinite',
+                        'float-reverse': 'floatRev 8s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 5s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-12px) rotate(1deg)' },
+                        },
+                        floatRev: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(12px) rotate(-1deg)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.45', transform: 'scale(1)' },
+                            '50%': { opacity: '0.75', transform: 'scale(1.08)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --bg-base: #F4F6F4;
+            --bg-subtle: #EBF0EC;
+            --text-heading: #17241F;
+            --text-body: #475850;
+            --text-muted: #6B7E76;
+            --primary-glow: rgba(16, 185, 129, 0.18);
+            --secondary-glow: rgba(245, 158, 11, 0.15);
+            --accent-color: #059669;
+            --accent-sub: #D97706;
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-border: rgba(255, 255, 255, 0.9);
+            --card-shadow: 0 20px 40px -15px rgba(23, 36, 31, 0.07), 0 2px 6px rgba(23, 36, 31, 0.03);
+            --pill-bg: rgba(255, 255, 255, 0.85);
+            --btn-gradient: linear-gradient(135deg, #059669 0%, #10B981 100%);
+            --btn-shadow: rgba(5, 150, 105, 0.3);
+            --mouse-x: 50vw;
+            --mouse-y: 50vh;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-body);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            transition: background-color 0.6s ease;
+        }
+
+        .fluffy-spring {
+            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .poly-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(28px) saturate(160%);
+            -webkit-backdrop-filter: blur(28px) saturate(160%);
+            border: 1px solid var(--card-border);
+            box-shadow: 
+                var(--card-shadow),
+                inset 0 1px 2px 0 rgba(255, 255, 255, 0.95),
+                inset 0 -1px 2px 0 rgba(0, 0, 0, 0.02);
+            border-radius: 32px;
+            position: relative;
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .poly-card:hover {
+            box-shadow: 
+                0 30px 55px -15px rgba(23, 36, 31, 0.12),
+                inset 0 1px 2px 0 rgba(255, 255, 255, 1);
+        }
+
+        .fluffy-pill {
+            background: var(--pill-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 
+                0 6px 18px -4px rgba(23, 36, 31, 0.06),
+                inset 0 1px 2px 0 rgba(255, 255, 255, 1);
+            border-radius: 9999px;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .fluffy-pill:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 
+                0 14px 28px -6px rgba(5, 150, 105, 0.18),
+                inset 0 1px 2px 0 rgba(255, 255, 255, 1);
+        }
+
+        #cursor-lighting {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 2;
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--primary-glow), transparent 70%);
+            mix-blend-mode: multiply;
+            opacity: 0.85;
+            transition: opacity 0.3s ease;
+        }
+
+        .card-shine {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(350px circle at var(--card-x, 50%) var(--card-y, 50%), rgba(255,255,255,0.65), transparent 70%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 20;
+        }
+
+        .poly-card:hover .card-shine {
+            opacity: 1;
+        }
+
+        .border-glow-wrap {
+            position: relative;
+            border-radius: 34px;
+            padding: 2px;
+            background: linear-gradient(90deg, #10b981, #f59e0b, #6366f1, #10b981);
+            background-size: 300% 300%;
+            animation: gradientMove 9s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .btn-fluffy-primary {
+            background: var(--btn-gradient);
+            box-shadow: 
+                0 10px 24px -4px var(--btn-shadow),
+                inset 0 1px 2px 0 rgba(255, 255, 255, 0.5);
+            border-radius: 9999px;
+            color: #ffffff;
+            font-weight: 700;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-fluffy-primary:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 
+                0 16px 32px -4px var(--btn-shadow),
+                inset 0 1px 2px 0 rgba(255, 255, 255, 0.7);
+        }
+
+        .floating-dock {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(24px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 
+                0 20px 45px -10px rgba(23, 36, 31, 0.12),
+                inset 0 1px 2px 0 rgba(255, 255, 255, 1);
+            border-radius: 9999px;
+        }
+
+        .pulse-dot {
+            animation: pulseWave 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulseWave {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+                box-shadow: 0 0 12px 3px rgba(16, 185, 129, 0.5);
+            }
+            50% {
+                opacity: 0.45;
+                transform: scale(0.85);
+                box-shadow: 0 0 4px 1px rgba(16, 185, 129, 0.2);
+            }
+        }
+    </style>
+</head>
+<body class="relative min-h-screen">
+
+    <div id="cursor-lighting"></div>
+
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div id="glow-orb-1" class="absolute -top-32 -left-32 w-[680px] h-[680px] rounded-full bg-emerald-200/50 blur-[130px] animate-pulse-glow"></div>
+        <div id="glow-orb-2" class="absolute top-[35%] -right-32 w-[600px] h-[600px] rounded-full bg-amber-200/45 blur-[140px] animate-float-slow"></div>
+        <div id="glow-orb-3" class="absolute bottom-10 left-[20%] w-[580px] h-[580px] rounded-full bg-teal-200/40 blur-[140px] animate-float-reverse"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.7)_0%,transparent_75%)]"></div>
+    </div>
+
+    <!-- TOP SOOTHING PALETTE SWITCHER & DECISION BAR -->
+    <header class="sticky top-0 z-50 px-4 pt-3 pb-2 transition-all duration-300">
+        <div class="max-w-7xl mx-auto">
+            <div class="fluffy-pill px-4 sm:px-6 py-2.5 flex items-center justify-between gap-3 bg-white/80">
+                <div class="flex items-center gap-3">
+                    <span class="flex h-2.5 w-2.5 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                    </span>
+                    <span class="text-xs sm:text-sm font-semibold tracking-wide text-gray-800 flex items-center gap-2">
+                        <span class="hidden md:inline text-gray-500 font-normal">Eye-Comfortable Revamp:</span>
+                        <span id="theme-display-title" class="bg-gradient-to-r from-emerald-600 via-teal-600 to-amber-600 bg-clip-text text-transparent font-bold">
+                            🌿 Calming Sage &amp; Matcha Pearl
+                        </span>
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <div class="hidden sm:flex items-center gap-1.5 bg-gray-100/80 px-2 py-1 rounded-full border border-gray-200 text-xs">
+                        <span class="text-gray-500 px-1 text-[11px] font-medium">Palette:</span>
+                        <button onclick="setLightPalette('sage')" class="theme-btn px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-600 text-white shadow-sm hover:scale-105 transition-transform" data-theme="sage">🌿 Sage</button>
+                        <button onclick="setLightPalette('cashmere')" class="theme-btn px-2.5 py-0.5 rounded-full text-xs font-semibold text-gray-600 hover:text-gray-900 hover:scale-105 transition-transform" data-theme="cashmere">☕ Cashmere</button>
+                        <button onclick="setLightPalette('lavender')" class="theme-btn px-2.5 py-0.5 rounded-full text-xs font-semibold text-gray-600 hover:text-gray-900 hover:scale-105 transition-transform" data-theme="lavender">☁️ Lavender</button>
+                    </div>
+
+                    <a href="{% url 'home' %}" class="px-3 sm:px-4 py-1.5 rounded-full bg-gray-200/80 hover:bg-gray-300 text-gray-800 font-semibold text-xs transition-all">
+                        &larr; Original Site
+                    </a>
+
+                    <button onclick="openDecisionModal()" class="px-3 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs sm:text-sm shadow-[0_4px_14px_rgba(5,150,105,0.3)] hover:shadow-[0_6px_20px_rgba(5,150,105,0.45)] hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Revamp Decisions</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- FLOATING DOCK NAVIGATION -->
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 px-3 py-2 floating-dock flex items-center gap-1 sm:gap-2 shadow-xl">
+        <a href="#hero" class="nav-dock-item px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100/60 transition-all flex items-center gap-1.5 active">
+            <i class="fas fa-home text-emerald-600"></i>
+            <span class="hidden sm:inline">Hero</span>
+        </a>
+        <a href="#about" class="nav-dock-item px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all flex items-center gap-1.5">
+            <i class="fas fa-user-astronaut text-teal-600"></i>
+            <span class="hidden sm:inline">About</span>
+        </a>
+        <a href="#skills" class="nav-dock-item px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all flex items-center gap-1.5">
+            <i class="fas fa-layer-group text-amber-600"></i>
+            <span class="hidden sm:inline">Skills</span>
+        </a>
+        <a href="#projects" class="nav-dock-item px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all flex items-center gap-1.5">
+            <i class="fas fa-cubes text-emerald-600"></i>
+            <span class="hidden sm:inline">Projects</span>
+        </a>
+        <a href="#contact" class="nav-dock-item px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all flex items-center gap-1.5">
+            <i class="fas fa-paper-plane text-lime-600"></i>
+            <span class="hidden sm:inline">Contact</span>
+        </a>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-28 sm:space-y-36 pb-36">
+
+        <!-- 1. HERO -->
+        <section id="hero" class="pt-12 sm:pt-16 lg:pt-20">
+            <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                <div class="lg:col-span-7 text-center lg:text-left space-y-7">
+                    <div class="inline-flex items-center gap-3 px-4 sm:px-5 py-2 rounded-full bg-white/90 border border-gray-200/80 shadow-sm hover:border-emerald-300 hover:bg-white transition-all cursor-pointer">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 pulse-dot flex-shrink-0"></span>
+                        <span class="text-xs sm:text-sm text-gray-700 font-medium">Available for Summer Internship &amp; High-Impact Roles</span>
+                        <i class="fas fa-sparkles text-amber-500 text-xs ml-1"></i>
+                    </div>
+
+                    <div class="flex items-center justify-center lg:justify-start gap-2">
+                        <span class="h-0.5 w-8 bg-gradient-to-r from-emerald-600 to-amber-500 rounded-full"></span>
+                        <p class="uppercase tracking-[6px] text-xs sm:text-sm font-bold text-emerald-700 font-display">
+                            Full Stack &amp; Backend Engineer
+                        </p>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-black font-display tracking-tight leading-[1.02] text-gray-900">
+                        Crafting <br>
+                        <span>Digital</span>
+                        <span class="relative inline-block mx-1">
+                            <span class="bg-gradient-to-r from-emerald-600 via-teal-600 to-amber-600 bg-clip-text text-transparent">Elegance</span>
+                            <span class="absolute -bottom-1.5 left-0 right-0 h-1.5 rounded-full bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-300 opacity-60"></span>
+                        </span>
+                    </h1>
+
+                    <p class="text-gray-600 text-base sm:text-lg lg:text-xl font-normal leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        Hi, I’m <span class="text-gray-900 font-bold">Om Verma</span>. Computer Science engineer architecting resilient backends in <span class="text-emerald-700 font-semibold">Django &amp; Python</span>, paired with liquid-smooth interactive interfaces in <span class="text-amber-700 font-semibold">React &amp; Tailwind</span>.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-3">
+                        <a href="#projects" class="btn-fluffy-primary w-full sm:w-auto px-8 py-4 text-center font-bold flex items-center justify-center gap-3 text-base">
+                            <span>Explore Projects</span>
+                            <i class="fas fa-arrow-right text-sm"></i>
+                        </a>
+
+                        <a href="#contact" class="fluffy-pill w-full sm:w-auto px-8 py-4 text-center font-semibold text-gray-700 hover:text-gray-900 flex items-center justify-center gap-2.5 text-base hover:border-emerald-300">
+                            <i class="fas fa-comment-dots text-emerald-600"></i>
+                            <span>Let's Talk</span>
+                        </a>
+
+                        <a href="https://github.com/Omverma713" target="_blank" class="fluffy-pill w-12 h-12 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:border-emerald-300" title="GitHub Profile">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" class="fluffy-pill w-12 h-12 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:border-amber-300" title="LinkedIn Profile">
+                            <i class="fab fa-linkedin-in text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 flex justify-center items-center relative">
+                    <div class="poly-card tilt-card p-6 sm:p-8 w-full max-w-[400px] flex flex-col items-center text-center relative z-20 group cursor-pointer" data-tilt>
+                        <div class="card-shine"></div>
+
+                        <div class="relative w-44 h-44 sm:w-56 sm:h-56 mb-6">
+                            <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-emerald-300 via-teal-200 to-amber-200 blur-2xl opacity-60 group-hover:opacity-85 group-hover:scale-105 transition-all duration-700"></div>
+                            
+                            <div class="absolute -inset-2 rounded-full border border-dashed border-emerald-400/40 animate-[spin_20s_linear_infinite]"></div>
+                            <div class="absolute -inset-4 rounded-full border border-amber-400/30 animate-[spin_28s_linear_infinite_reverse]"></div>
+
+                            <div class="relative w-full h-full rounded-full p-1.5 bg-gradient-to-tr from-emerald-400 via-teal-300 to-amber-300 shadow-xl overflow-hidden">
+                                <img src="{% static 'images/profile.png' %}" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop'" alt="Om Verma" class="w-full h-full object-cover rounded-full bg-slate-100 group-hover:scale-105 transition-transform duration-500">
+                            </div>
+
+                            <div class="absolute -bottom-2 -left-4 fluffy-pill px-3.5 py-1.5 flex items-center gap-1.5 text-xs font-bold text-gray-800 bg-white/95 shadow-md border border-emerald-300 animate-float-slow">
+                                <i class="fas fa-terminal text-emerald-600"></i>
+                                <span>500+ DSA</span>
+                            </div>
+
+                            <div class="absolute top-2 -right-4 fluffy-pill px-3.5 py-1.5 flex items-center gap-1.5 text-xs font-bold text-gray-800 bg-white/95 shadow-md border border-amber-300 animate-float-reverse">
+                                <i class="fas fa-fire text-amber-500"></i>
+                                <span>2+ Yrs Dev</span>
+                            </div>
+                        </div>
+
+                        <h2 class="text-2xl font-black font-display text-gray-900 mb-1">Om Verma</h2>
+                        <p class="text-xs font-bold text-emerald-700 tracking-wider uppercase mb-4">CS Engineer &bull; Backend Builder</p>
+
+                        <div class="flex flex-wrap gap-2 justify-center">
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">Django</span>
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">Python</span>
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-teal-50 text-teal-800 border border-teal-200">Tailwind</span>
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-lime-50 text-lime-800 border border-lime-200">PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+                <div class="poly-card tilt-card p-5 sm:p-6 text-center group" data-tilt>
+                    <div class="card-shine"></div>
+                    <div class="w-12 h-12 rounded-2xl mx-auto mb-3 bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-600 group-hover:scale-110 group-hover:shadow-md transition-all">
+                        <i class="fas fa-server text-xl"></i>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black font-display text-gray-900">Production</div>
+                    <div class="text-xs sm:text-sm text-gray-500 font-medium mt-1">Backend Architecture</div>
+                </div>
+
+                <div class="poly-card tilt-card p-5 sm:p-6 text-center group" data-tilt>
+                    <div class="card-shine"></div>
+                    <div class="w-12 h-12 rounded-2xl mx-auto mb-3 bg-amber-100 border border-amber-200 flex items-center justify-center text-amber-600 group-hover:scale-110 group-hover:shadow-md transition-all">
+                        <i class="fas fa-code-branch text-xl"></i>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black font-display text-amber-700">500+</div>
+                    <div class="text-xs sm:text-sm text-gray-500 font-medium mt-1">LeetCode &amp; DSA Solved</div>
+                </div>
+
+                <div class="poly-card tilt-card p-5 sm:p-6 text-center group" data-tilt>
+                    <div class="card-shine"></div>
+                    <div class="w-12 h-12 rounded-2xl mx-auto mb-3 bg-teal-100 border border-teal-200 flex items-center justify-center text-teal-600 group-hover:scale-110 group-hover:shadow-md transition-all">
+                        <i class="fas fa-laptop-code text-xl"></i>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black font-display text-teal-700">10+</div>
+                    <div class="text-xs sm:text-sm text-gray-500 font-medium mt-1">Modern Technologies</div>
+                </div>
+
+                <div class="poly-card tilt-card p-5 sm:p-6 text-center group" data-tilt>
+                    <div class="card-shine"></div>
+                    <div class="w-12 h-12 rounded-2xl mx-auto mb-3 bg-lime-100 border border-lime-200 flex items-center justify-center text-lime-600 group-hover:scale-110 group-hover:shadow-md transition-all">
+                        <i class="fas fa-bolt text-xl"></i>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-black font-display text-lime-700">&lt; 100ms</div>
+                    <div class="text-xs sm:text-sm text-gray-500 font-medium mt-1">Optimized Response</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ABOUT -->
+        <section id="about" class="space-y-12">
+            <div class="text-center space-y-3">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100/80 border border-emerald-200 text-xs font-bold text-emerald-800 uppercase tracking-widest">
+                    <i class="fas fa-user-circle"></i> Engineering Philosophy
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-black font-display text-gray-900">
+                    Where Precision Meets <span class="bg-gradient-to-r from-emerald-600 via-teal-600 to-amber-600 bg-clip-text text-transparent">Creative Soul</span>
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">
+                    Every web application should not only function with bulletproof reliability under heavy load, but also delight with fluid, buttery tactile interaction.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-6 sm:gap-8">
+                <div class="poly-card tilt-card p-7 sm:p-8 space-y-4" data-tilt>
+                    <div class="card-shine"></div>
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-700 text-2xl shadow-sm">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-display text-gray-900">Robust Backend Core</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Specialized in Django, relational schema design, REST APIs, asynchronous background jobs (Brevo/Celery), and secure authentication flows with Cloudflare Turnstile protection.
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-1.5">
+                        <span class="fluffy-pill px-3 py-1 text-xs text-gray-700 font-medium">ORM Mastery</span>
+                        <span class="fluffy-pill px-3 py-1 text-xs text-gray-700 font-medium">Clean Architecture</span>
+                    </div>
+                </div>
+
+                <div class="poly-card tilt-card p-7 sm:p-8 space-y-4 border-glow-wrap" data-tilt>
+                    <div class="poly-card p-6 h-full space-y-4 bg-white/90">
+                        <div class="card-shine"></div>
+                        <div class="w-14 h-14 rounded-2xl bg-teal-100 border border-teal-200 flex items-center justify-center text-teal-700 text-2xl shadow-sm">
+                            <i class="fas fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h3 class="text-xl font-bold font-display text-gray-900">Fluid Interaction &amp; UI</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Crafting organic polymorphic components with tactile feedback, zero-jank 60FPS animations, buttery momentum scrolling, and clean responsive CSS.
+                        </p>
+                        <div class="pt-2 flex flex-wrap gap-1.5">
+                            <span class="fluffy-pill px-3 py-1 text-xs text-emerald-800 font-medium">Tailwind CSS</span>
+                            <span class="fluffy-pill px-3 py-1 text-xs text-amber-800 font-medium">Micro-animations</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="poly-card tilt-card p-7 sm:p-8 space-y-4" data-tilt>
+                    <div class="card-shine"></div>
+                    <div class="w-14 h-14 rounded-2xl bg-amber-100 border border-amber-200 flex items-center justify-center text-amber-700 text-2xl shadow-sm">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-display text-gray-900">Algorithmic Problem Solver</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Continuously training mental models with 500+ data structures and algorithms problems solved across arrays, dynamic programming, graphs, and system design patterns.
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-1.5">
+                        <span class="fluffy-pill px-3 py-1 text-xs text-gray-700 font-medium">Competitive Coding</span>
+                        <span class="fluffy-pill px-3 py-1 text-xs text-gray-700 font-medium">Efficiency Mindset</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. SKILLS -->
+        <section id="skills" class="space-y-10">
+            <div class="text-center space-y-3">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-100/80 border border-teal-200 text-xs font-bold text-teal-800 uppercase tracking-widest">
+                    <i class="fas fa-microchip"></i> Technical Repertoire
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-black font-display text-gray-900">
+                    Supercharged <span class="bg-gradient-to-r from-emerald-600 to-amber-600 bg-clip-text text-transparent">Tech Stack</span>
+                </h2>
+                <p class="text-gray-600 max-w-xl mx-auto text-sm sm:text-base">
+                    Click categories to filter live or hover over badges to activate dynamic edge lighting.
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-2 pt-4">
+                    <button onclick="filterSkills('all')" class="skill-filter-btn fluffy-pill px-5 py-2 text-xs sm:text-sm font-bold text-white bg-emerald-600 border-emerald-600 shadow-sm" data-category="all">
+                        ✨ All Skills
+                    </button>
+                    <button onclick="filterSkills('backend')" class="skill-filter-btn fluffy-pill px-5 py-2 text-xs sm:text-sm font-semibold text-gray-700 hover:text-gray-900" data-category="backend">
+                        🛠️ Backend &amp; DB
+                    </button>
+                    <button onclick="filterSkills('frontend')" class="skill-filter-btn fluffy-pill px-5 py-2 text-xs sm:text-sm font-semibold text-gray-700 hover:text-gray-900" data-category="frontend">
+                        🎨 Frontend &amp; Motion
+                    </button>
+                    <button onclick="filterSkills('devops')" class="skill-filter-btn fluffy-pill px-5 py-2 text-xs sm:text-sm font-semibold text-gray-700 hover:text-gray-900" data-category="devops">
+                        🚀 DevOps &amp; Cloud
+                    </button>
+                </div>
+            </div>
+
+            <div id="skills-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5 sm:gap-4">
+                <div class="skill-card poly-card p-4 text-center group cursor-pointer hover:border-emerald-400 transition-all" data-category="backend">
+                    <div class="card-shine"></div>
+                    <i class="fab fa-python text-3xl sm:text-4xl text-amber-500 mb-2 group-hover:scale-125 group-hover:rotate-6 transition-transform"></i>
+                    <div class="font-bold text-sm text-gray-900">Python</div>
+                    <div class="text-[11px] text-gray-500">Core Language</div>
+                </div>
+
+                <div class="skill-card poly-card p-4 text-center group cursor-pointer hover:border-emerald-400 transition-all" data-category="backend">
+                    <div class="card-shine"></div>
+                    <i class="fas fa-network-wired text-3xl sm:text-4xl text-emerald-600 mb-2 group-hover:scale-125 transition-transform"></i>
+                    <div class="font-bold text-sm text-gray-900">Django</div>
+                    <div class="text-[11px] text-gray-500">Web Framework</div>
+                </div>
+
+                <div class="skill-card poly-card p-4 text-center group cursor-pointer hover:border-blue-400 transition-all" data-category="backend">
+                    <div class="card-shine"></div>
+                    <i class="fas fa-database text-3xl sm:text-4xl text-blue-600 mb-2 group-hover:scale-125 transition-transform"></i>
+                    <div class="font-bold text-sm text-gray-900">PostgreSQL</div>
+                    <div class="text-[11px] text-gray-500">Relational DB</div>
+                </div>
+
+                <div class="skill-card poly-card p-4 text-center group cursor-pointer hover:border-teal-400 transition-all" data-category="backend">
+                    <div class="card-shine"></div>
+                    <i class="fas fa-feather-pointed text-3xl sm:text-4xl text-teal-600 mb-2 group-hover:scale-125 transition-transform"></i>
+                    <div class="font-bold text-sm text-gray-900">SQLite</div>
+                    <div class="text-[11px] text-gray-500">Embedded DB</div>
+                </div>
+
+                <div class="skill-card poly-card p-4 text-center group cursor-pointer hover:border-amber-400 transition-all" data-category="backend">
+                    <div class="card-shine"></div>
+                    <i class="fas fa-cloud-arrow-down text-3xl sm:text-4xl text-amber-600 mb-2 group-hover:scale-125 transition-transform"></i>
+                    <div class="font-bold text-sm text-gray-900">REST APIs</div>
+                    <div class="text-[11px] text-gray-500">DRF &amp; Endpoints</div>
+                </div>
+
+                <div class="skill-card poly-card p-4 text-center group cursor-pointer hover:border-amber-400 transition-all" data-category="frontend">
+                    <div class="card-shine"></div>
+                    <i class="fab fa-js-square text-3xl sm:text-4xl text-amber-500 mb-2 group-hover:scale-125 group-hover:-rotate-6 transition-transform"></i>
+                    <div class="font-bold text-sm text-gray-900">JavaScript</div>
+                    <div class="text-[11px] text-gray-500">ES6+ &amp; DOM</div>
+                </div>
+
+                <div class="skill-card poly-card p-4 text-center group cursor-pointer hover:border-teal-400 transition-all" data-category="frontend">
+                    <div class="card-shine"></div>
+                    <i class="fab fa-css3-alt text-3xl sm:text-4xl text-teal-600 mb-2 group-hover:scale-125 transition-transform"></i>
+                    <div class="font-bold text-sm text-gray-900">Tailwind CSS</div>
+                    <div class="text-[11px] text-gray-500">Utility Styling</div>
+                </div>
+
+                <div class="skill-card poly-card p-4 text-center group cursor-pointer hover:border-cyan-400 transition-all" data-category="frontend">
+                    <div class="card-shine"></div>
+                    <i class="fab fa-react text-3xl sm:text-4xl text-cyan-600 mb-2 group-hover:scale-125 group-hover:rotate-180 transition-transform duration-700"></i>
+                    <div class="font-bold text-sm text-gray-900">React</div>
+                    <div class="text-[11px] text-gray-500">Component UI</div>
+                </div>
+
+                <div class="skill-card poly-card p-4 text-center group cursor-pointer hover:border-lime-400 transition-all" data-category="frontend">
+                    <div class="card-shine"></div>
+                    <i class="fas fa-film text-3xl sm:text-4xl text-lime-600 mb-2 group-hover:scale-125 transition-transform"></i>
+                    <div class="font-bold text-sm text-gray-900">GSAP &amp; Motion</div>
+                    <div class="text-[11px] text-gray-500">High-FPS Motion</div>
+                </div>
+
+                <div class="skill-card poly-card p-4 text-center group cursor-pointer hover:border-orange-400 transition-all" data-category="devops">
+                    <div class="card-shine"></div>
+                    <i class="fab fa-git-alt text-3xl sm:text-4xl text-orange-600 mb-2 group-hover:scale-125 transition-transform"></i>
+                    <div class="font-bold text-sm text-gray-900">Git &amp; GitHub</div>
+                    <div class="text-[11px] text-gray-500">Version Control</div>
+                </div>
+
+                <div class="skill-card poly-card p-4 text-center group cursor-pointer hover:border-blue-400 transition-all" data-category="devops">
+                    <div class="card-shine"></div>
+                    <i class="fab fa-docker text-3xl sm:text-4xl text-blue-600 mb-2 group-hover:scale-125 transition-transform"></i>
+                    <div class="font-bold text-sm text-gray-900">Docker &amp; Linux</div>
+                    <div class="text-[11px] text-gray-500">Containers</div>
+                </div>
+
+                <div class="skill-card poly-card p-4 text-center group cursor-pointer hover:border-emerald-400 transition-all" data-category="devops">
+                    <div class="card-shine"></div>
+                    <i class="fas fa-server text-3xl sm:text-4xl text-emerald-600 mb-2 group-hover:scale-125 transition-transform"></i>
+                    <div class="font-bold text-sm text-gray-900">Render &amp; AWS</div>
+                    <div class="text-[11px] text-gray-500">Deployment</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. PROJECTS -->
+        <section id="projects" class="space-y-12">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div class="space-y-2">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100/80 border border-emerald-200 text-xs font-bold text-emerald-800 uppercase tracking-widest">
+                        <i class="fas fa-rocket"></i> Engineered Work
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-black font-display text-gray-900">
+                        Featured <span class="bg-gradient-to-r from-emerald-600 via-teal-600 to-amber-600 bg-clip-text text-transparent">Creations</span>
+                    </h2>
+                </div>
+                <p class="text-gray-600 text-sm max-w-md">
+                    Interactive project cards with dynamic 3D tilt, iridescent border beams, and real architectural modal inspection.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8 sm:gap-10">
+                <div class="poly-card tilt-card overflow-hidden group cursor-pointer" data-tilt>
+                    <div class="card-shine"></div>
+                    <div class="relative h-64 sm:h-72 overflow-hidden bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1400&auto=format&fit=crop" alt="Portfolio Website" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-black/10"></div>
+                        <div class="absolute top-4 right-4 fluffy-pill px-3 py-1 text-xs font-bold text-emerald-800 bg-white/90 border border-emerald-200 shadow-sm">
+                            01 / 04
+                        </div>
+                    </div>
+
+                    <div class="p-6 sm:p-8 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-2xl font-bold font-display text-gray-900 group-hover:text-emerald-700 transition-colors">
+                                Portfolio Website (Production)
+                            </h3>
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 pulse-dot"></span>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Full-featured Django production portfolio featuring async Brevo email notification microservice, Cloudflare Turnstile protection, Lenis momentum physics, and GSAP micro-animations.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 pt-1">
+                            <span class="fluffy-pill px-3 py-1 text-xs font-semibold text-emerald-800 bg-emerald-50">Django</span>
+                            <span class="fluffy-pill px-3 py-1 text-xs font-semibold text-teal-800 bg-teal-50">Tailwind</span>
+                            <span class="fluffy-pill px-3 py-1 text-xs font-semibold text-amber-800 bg-amber-50">GSAP</span>
+                            <span class="fluffy-pill px-3 py-1 text-xs font-semibold text-lime-800 bg-lime-50">Lenis</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 pt-3">
+                            <a href="https://django-portfolio-i2t8.onrender.com/" target="_blank" class="flex-1 py-3 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-center text-sm shadow-[0_4px_14px_rgba(5,150,105,0.3)] active:scale-95 transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-external-link-alt text-xs"></i>
+                                <span>Live Demo</span>
+                            </a>
+                            <a href="https://github.com/Omverma713/django-portfolio" target="_blank" class="flex-1 py-3 px-4 rounded-2xl border border-gray-300 hover:border-emerald-400 bg-white hover:bg-gray-50 text-gray-800 font-semibold text-center text-sm active:scale-95 transition-all flex items-center justify-center gap-2">
+                                <i class="fab fa-github text-sm"></i>
+                                <span>Source</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="poly-card tilt-card overflow-hidden group cursor-pointer" data-tilt>
+                    <div class="card-shine"></div>
+                    <div class="relative h-64 sm:h-72 overflow-hidden bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1400&auto=format&fit=crop" alt="Django Blog" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-black/10"></div>
+                        <div class="absolute top-4 right-4 fluffy-pill px-3 py-1 text-xs font-bold text-amber-800 bg-white/90 border border-amber-200 shadow-sm">
+                            02 / 04
+                        </div>
+                    </div>
+
+                    <div class="p-6 sm:p-8 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-2xl font-bold font-display text-gray-900 group-hover:text-amber-700 transition-colors">
+                                Django Content &amp; Blog Hub
+                            </h3>
+                            <i class="fas fa-feather text-amber-600 text-sm"></i>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Scalable blogging platform with user role authorization, nested comment threads, category tagging, full-text search indexing, and a custom Markdown rich editor.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 pt-1">
+                            <span class="fluffy-pill px-3 py-1 text-xs font-semibold text-amber-800 bg-amber-50">Django</span>
+                            <span class="fluffy-pill px-3 py-1 text-xs font-semibold text-teal-800 bg-teal-50">PostgreSQL</span>
+                            <span class="fluffy-pill px-3 py-1 text-xs font-semibold text-emerald-800 bg-emerald-50">Tailwind</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 pt-3">
+                            <a href="{% url 'live_demo_soon' %}" class="flex-1 py-3 px-4 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-center text-sm shadow-[0_4px_14px_rgba(217,119,6,0.3)] active:scale-95 transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-external-link-alt text-xs"></i>
+                                <span>Live Demo</span>
+                            </a>
+                            <a href="https://github.com/Omverma713/django-blog" target="_blank" class="flex-1 py-3 px-4 rounded-2xl border border-gray-300 hover:border-amber-400 bg-white hover:bg-gray-50 text-gray-800 font-semibold text-center text-sm active:scale-95 transition-all flex items-center justify-center gap-2">
+                                <i class="fab fa-github text-sm"></i>
+                                <span>Source</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="poly-card tilt-card overflow-hidden group cursor-pointer" data-tilt>
+                    <div class="card-shine"></div>
+                    <div class="relative h-64 sm:h-72 overflow-hidden bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1400&auto=format&fit=crop" alt="Bookmark App" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-black/10"></div>
+                        <div class="absolute top-4 right-4 fluffy-pill px-3 py-1 text-xs font-bold text-teal-800 bg-white/90 border border-teal-200 shadow-sm">
+                            03 / 04
+                        </div>
+                    </div>
+
+                    <div class="p-6 sm:p-8 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-2xl font-bold font-display text-gray-900 group-hover:text-teal-700 transition-colors">
+                                Bookmark Media Vault
+                            </h3>
+                            <i class="fas fa-bookmark text-teal-600 text-sm"></i>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Visual bookmarking app inspired by Pinterest. Enables users to scrape web images via JavaScript bookmarklet, organize smart boards, like, and share collections.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 pt-1">
+                            <span class="fluffy-pill px-3 py-1 text-xs font-semibold text-teal-800 bg-teal-50">Django</span>
+                            <span class="fluffy-pill px-3 py-1 text-xs font-semibold text-lime-800 bg-lime-50">Redis Cache</span>
+                            <span class="fluffy-pill px-3 py-1 text-xs font-semibold text-emerald-800 bg-emerald-50">JavaScript</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 pt-3">
+                            <a href="{% url 'live_demo_soon' %}" class="flex-1 py-3 px-4 rounded-2xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-center text-sm shadow-[0_4px_14px_rgba(13,148,136,0.3)] active:scale-95 transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-external-link-alt text-xs"></i>
+                                <span>Live Demo</span>
+                            </a>
+                            <a href="https://github.com/Omverma713" target="_blank" class="flex-1 py-3 px-4 rounded-2xl border border-gray-300 hover:border-teal-400 bg-white hover:bg-gray-50 text-gray-800 font-semibold text-center text-sm active:scale-95 transition-all flex items-center justify-center gap-2">
+                                <i class="fab fa-github text-sm"></i>
+                                <span>Source</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="poly-card tilt-card overflow-hidden group cursor-pointer" data-tilt>
+                    <div class="card-shine"></div>
+                    <div class="relative h-64 sm:h-72 overflow-hidden bg-slate-100">
+                        <img src="https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1400&auto=format&fit=crop" alt="E-Commerce API" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-black/10"></div>
+                        <div class="absolute top-4 right-4 fluffy-pill px-3 py-1 text-xs font-bold text-lime-800 bg-white/90 border border-lime-200 shadow-sm">
+                            04 / 04
+                        </div>
+                    </div>
+
+                    <div class="p-6 sm:p-8 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-2xl font-bold font-display text-gray-900 group-hover:text-lime-700 transition-colors">
+                                E-Commerce &amp; Payment Gateway
+                            </h3>
+                            <i class="fas fa-shopping-bag text-lime-600 text-sm"></i>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Robust store architecture with product variants, session-based cart management, Stripe checkout integration, automated invoice PDF creation, and order state tracking.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 pt-1">
+                            <span class="fluffy-pill px-3 py-1 text-xs font-semibold text-lime-800 bg-lime-50">Django</span>
+                            <span class="fluffy-pill px-3 py-1 text-xs font-semibold text-emerald-800 bg-emerald-50">Stripe API</span>
+                            <span class="fluffy-pill px-3 py-1 text-xs font-semibold text-amber-800 bg-amber-50">WeasyPrint</span>
+                        </div>
+
+                        <div class="flex items-center gap-3 pt-3">
+                            <a href="{% url 'live_demo_soon' %}" class="flex-1 py-3 px-4 rounded-2xl bg-lime-600 hover:bg-lime-500 text-white font-bold text-center text-sm shadow-[0_4px_14px_rgba(101,163,13,0.3)] active:scale-95 transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-external-link-alt text-xs"></i>
+                                <span>Live Demo</span>
+                            </a>
+                            <a href="https://github.com/Omverma713" target="_blank" class="flex-1 py-3 px-4 rounded-2xl border border-gray-300 hover:border-lime-400 bg-white hover:bg-gray-50 text-gray-800 font-semibold text-center text-sm active:scale-95 transition-all flex items-center justify-center gap-2">
+                                <i class="fab fa-github text-sm"></i>
+                                <span>Source</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 5. CONTACT -->
+        <section id="contact" class="space-y-12">
+            <div class="text-center space-y-3">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100/80 border border-emerald-200 text-xs font-bold text-emerald-800 uppercase tracking-widest">
+                    <i class="fas fa-paper-plane"></i> Get In Touch
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-black font-display text-gray-900">
+                    Let’s Build Something <span class="bg-gradient-to-r from-emerald-600 via-teal-600 to-amber-600 bg-clip-text text-transparent">Extraordinary</span>
+                </h2>
+                <p class="text-gray-600 max-w-xl mx-auto text-sm sm:text-base">
+                    Interested in discussing a backend challenge, an internship role, or an open-source collaboration?
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="poly-card p-6 space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-700 text-xl shadow-sm">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-gray-500 font-medium">Direct Email</div>
+                                <a href="mailto:omverma.dev@gmail.com" class="text-gray-900 font-bold hover:text-emerald-700 transition-colors text-sm sm:text-base">
+                                    omverma.dev@gmail.com
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="poly-card p-6 space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-2xl bg-amber-100 border border-amber-200 flex items-center justify-center text-amber-700 text-xl shadow-sm">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-gray-500 font-medium">Location</div>
+                                <div class="text-gray-900 font-bold text-sm sm:text-base">
+                                    India &bull; Available Remotely Worldwide
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="poly-card p-6 space-y-3">
+                        <div class="text-xs text-gray-500 font-medium">Quick Copy Handle</div>
+                        <div class="flex items-center justify-between p-3 rounded-2xl bg-gray-50 border border-gray-200">
+                            <span class="text-sm font-mono text-emerald-800">omverma.dev@gmail.com</span>
+                            <button onclick="copyEmail(this)" class="px-3.5 py-1 rounded-full text-xs font-bold bg-white hover:bg-emerald-600 hover:text-white text-gray-700 border border-gray-200 shadow-sm transition-all">
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7">
+                    <form onsubmit="handleDemoSubmit(event)" class="poly-card p-7 sm:p-10 space-y-5 bg-white/85">
+                        <div class="grid sm:grid-cols-2 gap-5">
+                            <div class="space-y-1.5">
+                                <label class="text-xs font-bold text-gray-700">Your Name</label>
+                                <input type="text" required placeholder="Alex Turner" class="w-full px-4 py-3 rounded-2xl bg-gray-50/80 border border-gray-200 focus:border-emerald-500 focus:bg-white focus:outline-none text-gray-900 text-sm focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder:text-gray-400">
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="text-xs font-bold text-gray-700">Your Email</label>
+                                <input type="email" required placeholder="alex@company.com" class="w-full px-4 py-3 rounded-2xl bg-gray-50/80 border border-gray-200 focus:border-emerald-500 focus:bg-white focus:outline-none text-gray-900 text-sm focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder:text-gray-400">
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-bold text-gray-700">Subject</label>
+                            <input type="text" required placeholder="Internship Opportunity / Project Inquiry" class="w-full px-4 py-3 rounded-2xl bg-gray-50/80 border border-gray-200 focus:border-emerald-500 focus:bg-white focus:outline-none text-gray-900 text-sm focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder:text-gray-400">
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-bold text-gray-700">Message</label>
+                            <textarea rows="4" required placeholder="Tell me about your project, timeline, or open role..." class="w-full px-4 py-3 rounded-2xl bg-gray-50/80 border border-gray-200 focus:border-emerald-500 focus:bg-white focus:outline-none text-gray-900 text-sm focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder:text-gray-400 resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-fluffy-primary w-full py-4 text-center font-bold text-white flex items-center justify-center gap-2 text-base">
+                            <i class="fas fa-paper-plane text-sm"></i>
+                            <span>Send Message</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="pt-10 border-t border-gray-200/80 text-center space-y-4">
+            <div class="flex items-center justify-center gap-2 text-sm text-gray-600">
+                <span>Designed &amp; Architected with</span>
+                <i class="fas fa-heart text-emerald-500 animate-pulse"></i>
+                <span>by <strong class="text-gray-900">Om Verma</strong></span>
+            </div>
+            <p class="text-xs text-gray-500">
+                Eye-Comfortable Soothing Light Revamp Prototype &bull; Django &amp; Soft Polymorphic Glass
+            </p>
+        </footer>
+
+    </main>
+
+    <!-- DECISION MODAL -->
+    <div id="decision-modal" class="fixed inset-0 z-50 flex items-center justify-center px-4 bg-gray-900/40 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+        <div class="poly-card max-w-lg w-full p-6 sm:p-8 space-y-6 relative border border-white bg-white/95 shadow-2xl">
+            <button onclick="closeDecisionModal()" class="absolute top-5 right-5 text-gray-400 hover:text-gray-700 text-lg">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="space-y-2">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
+                    <i class="fas fa-clipboard-check"></i> Eye-Comfortable Light Mode
+                </div>
+                <h3 class="text-2xl font-black font-display text-gray-900">How does this soothing light aesthetic feel?</h3>
+                <p class="text-sm text-gray-600">
+                    We crafted a warm, non-stark light canvas with soft ambient lighting cushions, frosted porcelain morphism, and comforting earthy contrasts.
+                </p>
+            </div>
+
+            <div class="space-y-3">
+                <div class="p-3.5 rounded-2xl bg-gray-50 border border-gray-200/80 flex items-center justify-between">
+                    <div>
+                        <div class="text-sm font-bold text-gray-900">1. Calming Sage &amp; Matcha Pearl</div>
+                        <div class="text-xs text-gray-500">Herbal cream background `#F4F6F4` + soft emerald &amp; amber accents</div>
+                    </div>
+                    <span class="text-emerald-700 font-bold text-sm">Active &check;</span>
+                </div>
+
+                <div class="p-3.5 rounded-2xl bg-gray-50 border border-gray-200/80 flex items-center justify-between">
+                    <div>
+                        <div class="text-sm font-bold text-gray-900">2. Warm Cashmere &amp; Sand</div>
+                        <div class="text-xs text-gray-500">Warm oat milk `#FAF7F2` + caramel clay tones</div>
+                    </div>
+                    <button onclick="setLightPalette('cashmere')" class="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-300 hover:scale-105 transition-transform">Test Cashmere</button>
+                </div>
+
+                <div class="p-3.5 rounded-2xl bg-gray-50 border border-gray-200/80 flex items-center justify-between">
+                    <div>
+                        <div class="text-sm font-bold text-gray-900">3. Lavender Mist &amp; Soft Opal</div>
+                        <div class="text-xs text-gray-500">Serene cloud mist `#F5F3FF` + periwinkle highlights</div>
+                    </div>
+                    <button onclick="setLightPalette('lavender')" class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-800 border border-indigo-300 hover:scale-105 transition-transform">Test Lavender</button>
+                </div>
+            </div>
+
+            <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                <button onclick="alert('Great! Let me know in the chat: \'Proceed with migrating the site to this soothing light theme\' and I will update your Django templates!'); closeDecisionModal();" class="flex-1 py-3 px-4 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-sm text-center shadow-md hover:scale-105 active:scale-95 transition-all">
+                    Proceed with this Theme
+                </button>
+                <button onclick="closeDecisionModal()" class="flex-1 py-3 px-4 rounded-full border border-gray-300 text-gray-700 hover:text-gray-900 hover:bg-gray-100 font-semibold text-sm text-center transition-all">
+                    Keep Browsing
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast-msg" class="fixed top-20 right-6 z-50 px-5 py-3 rounded-full bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-xl backdrop-blur-xl border border-emerald-500 -translate-y-10 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2">
+        <i class="fas fa-sparkles text-white"></i>
+        <span id="toast-text">Action successful</span>
+    </div>
+
+    <script>
+        // 1. Dynamic Cursor Lighting System
+        const cursorLighting = document.getElementById('cursor-lighting');
+        window.addEventListener('pointermove', (e) => {
+            document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+            document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+        });
+
+        // 2. 3D Tilt Card Interaction
+        const tiltCards = document.querySelectorAll('[data-tilt]');
+        tiltCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -8;
+                const rotateY = ((x - centerX) / centerX) * 8;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateZ(8px)`;
+                card.style.setProperty('--card-x', `${(x / rect.width * 100).toFixed(1)}%`);
+                card.style.setProperty('--card-y', `${(y / rect.height * 100).toFixed(1)}%`);
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)`;
+                card.style.transition = 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            });
+
+            card.addEventListener('mouseenter', () => {
+                card.style.transition = 'none';
+            });
+        });
+
+        // 3. Soothing Light Palettes Engine
+        function setLightPalette(theme) {
+            const root = document.documentElement;
+            const orb1 = document.getElementById('glow-orb-1');
+            const orb2 = document.getElementById('glow-orb-2');
+            const orb3 = document.getElementById('glow-orb-3');
+            const titleDisplay = document.getElementById('theme-display-title');
+
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                if (btn.dataset.theme === theme) {
+                    btn.className = 'theme-btn px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-600 text-white shadow-sm hover:scale-105 transition-transform';
+                } else {
+                    btn.className = 'theme-btn px-2.5 py-0.5 rounded-full text-xs font-semibold text-gray-600 hover:text-gray-900 hover:scale-105 transition-transform';
+                }
+            });
+
+            if (theme === 'sage') {
+                root.style.setProperty('--bg-base', '#F4F6F4');
+                root.style.setProperty('--primary-glow', 'rgba(16, 185, 129, 0.18)');
+                root.style.setProperty('--secondary-glow', 'rgba(245, 158, 11, 0.15)');
+                root.style.setProperty('--accent-color', '#059669');
+                root.style.setProperty('--btn-gradient', 'linear-gradient(135deg, #059669 0%, #10B981 100%)');
+                root.style.setProperty('--btn-shadow', 'rgba(5, 150, 105, 0.3)');
+                orb1.className = 'absolute -top-32 -left-32 w-[680px] h-[680px] rounded-full bg-emerald-200/50 blur-[130px] animate-pulse-glow';
+                orb2.className = 'absolute top-[35%] -right-32 w-[600px] h-[600px] rounded-full bg-amber-200/45 blur-[140px] animate-float-slow';
+                orb3.className = 'absolute bottom-10 left-[20%] w-[580px] h-[580px] rounded-full bg-teal-200/40 blur-[140px] animate-float-reverse';
+                titleDisplay.className = 'bg-gradient-to-r from-emerald-600 via-teal-600 to-amber-600 bg-clip-text text-transparent font-bold';
+                titleDisplay.textContent = '🌿 Calming Sage & Matcha Pearl';
+                showToast('Switched to Calming Sage Theme 🌿');
+            } else if (theme === 'cashmere') {
+                root.style.setProperty('--bg-base', '#FAF7F2');
+                root.style.setProperty('--primary-glow', 'rgba(217, 119, 6, 0.18)');
+                root.style.setProperty('--secondary-glow', 'rgba(194, 65, 12, 0.14)');
+                root.style.setProperty('--accent-color', '#C2410C');
+                root.style.setProperty('--btn-gradient', 'linear-gradient(135deg, #EA580C 0%, #F59E0B 100%)');
+                root.style.setProperty('--btn-shadow', 'rgba(234, 88, 12, 0.28)');
+                orb1.className = 'absolute -top-32 -left-32 w-[680px] h-[680px] rounded-full bg-amber-200/50 blur-[130px] animate-pulse-glow';
+                orb2.className = 'absolute top-[35%] -right-32 w-[600px] h-[600px] rounded-full bg-orange-200/45 blur-[140px] animate-float-slow';
+                orb3.className = 'absolute bottom-10 left-[20%] w-[580px] h-[580px] rounded-full bg-rose-200/40 blur-[140px] animate-float-reverse';
+                titleDisplay.className = 'bg-gradient-to-r from-amber-700 via-orange-600 to-rose-600 bg-clip-text text-transparent font-bold';
+                titleDisplay.textContent = '☕ Warm Cashmere & Sand';
+                showToast('Switched to Warm Cashmere Theme ☕');
+            } else if (theme === 'lavender') {
+                root.style.setProperty('--bg-base', '#F6F5FB');
+                root.style.setProperty('--primary-glow', 'rgba(99, 102, 241, 0.18)');
+                root.style.setProperty('--secondary-glow', 'rgba(168, 85, 247, 0.15)');
+                root.style.setProperty('--accent-color', '#4F46E5');
+                root.style.setProperty('--btn-gradient', 'linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%)');
+                root.style.setProperty('--btn-shadow', 'rgba(79, 70, 229, 0.28)');
+                orb1.className = 'absolute -top-32 -left-32 w-[680px] h-[680px] rounded-full bg-indigo-200/50 blur-[130px] animate-pulse-glow';
+                orb2.className = 'absolute top-[35%] -right-32 w-[600px] h-[600px] rounded-full bg-purple-200/45 blur-[140px] animate-float-slow';
+                orb3.className = 'absolute bottom-10 left-[20%] w-[580px] h-[580px] rounded-full bg-sky-200/40 blur-[140px] animate-float-reverse';
+                titleDisplay.className = 'bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-bold';
+                titleDisplay.textContent = '☁️ Lavender Mist & Soft Opal';
+                showToast('Switched to Lavender Mist Theme ☁️');
+            }
+        }
+
+        function filterSkills(category) {
+            document.querySelectorAll('.skill-filter-btn').forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.classList.add('bg-emerald-600', 'border-emerald-600', 'text-white', 'shadow-sm');
+                    btn.classList.remove('text-gray-700');
+                } else {
+                    btn.classList.remove('bg-emerald-600', 'border-emerald-600', 'text-white', 'shadow-sm');
+                    btn.classList.add('text-gray-700');
+                }
+            });
+
+            const cards = document.querySelectorAll('.skill-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.9)';
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                        card.style.opacity = '1';
+                        card.style.transform = 'scale(1)';
+                    }, 50);
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function showToast(text) {
+            const toast = document.getElementById('toast-msg');
+            const toastText = document.getElementById('toast-text');
+            toastText.textContent = text;
+            toast.classList.remove('-translate-y-10', 'opacity-0', 'pointer-events-none');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                toast.classList.add('-translate-y-10', 'opacity-0', 'pointer-events-none');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+
+        function copyEmail(btn) {
+            navigator.clipboard.writeText('omverma.dev@gmail.com');
+            const originalText = btn.textContent;
+            btn.textContent = 'Copied!';
+            btn.classList.add('bg-emerald-600', 'text-white');
+            showToast('Email copied to clipboard! 📋');
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.classList.remove('bg-emerald-600', 'text-white');
+            }, 2000);
+        }
+
+        function handleDemoSubmit(e) {
+            e.preventDefault();
+            showToast('Message form simulated! Connected to Brevo API in production.');
+        }
+
+        function openDecisionModal() {
+            const modal = document.getElementById('decision-modal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100');
+        }
+
+        function closeDecisionModal() {
+            const modal = document.getElementById('decision-modal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.remove('opacity-100');
+        }
+    </script>
+</body>
+</html>
