@@ -451,8 +451,4 @@ def github_soon(request):
 def revamp_preview(request):
     return render(request, "main/revamp_template.html")
 
-
-def game_world(request):
-    return render(request, "main/game_world.html")
-
 

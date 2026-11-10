@@ -1,4 +1,4 @@
-﻿try:
+try:
     import edge_tts
 except ImportError:
     edge_tts = None
